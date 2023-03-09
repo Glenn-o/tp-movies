@@ -1,8 +1,5 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -29,7 +26,6 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-
   ],
   providers: [],
   bootstrap: [],
