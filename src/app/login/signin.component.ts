@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
-  standalone: true,
   selector: 'tp-movies-sign-in',
+  standalone: true,
   template: ` <div class="authBlock">
     <h3>CONNEXION</h3>
     <div class="formGroup">

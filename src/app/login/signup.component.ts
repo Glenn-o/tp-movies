@@ -3,6 +3,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
 
 @Component({
   selector: 'tp-movies-sign-up',
+  standalone: true,
   template: ` <div class="authBlock">
     <h3>INSCRIPTION</h3>
     <div class="formGroup">
