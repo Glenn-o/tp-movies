@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tp-movies-2023": {
+      "hosting": {
+        "tp-movies": [
+          "tp-movies-2023"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tp-movies-2023"
+  }
+}
