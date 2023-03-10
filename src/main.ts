@@ -9,9 +9,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app/app.routes';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideHttpClient(),
     provideRouter([
       ...appRoutes
     ]),
