@@ -8,10 +8,19 @@ import { AuthenticationService } from '../shared/services/authentication.service
     <h3>INSCRIPTION</h3>
     <div class="formGroup">
       <input
+        type="email"
+        class="formControl"
+        placeholder="Email"
+        #userEmail
+        required
+      />
+    </div>
+    <div class="formGroup">
+      <input
         type="text"
         class="formControl"
         placeholder="Username"
-        #userEmail
+        #userUsername
         required
       />
     </div>
@@ -31,7 +40,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
         class="btn btnPrimary"
         value="Sign Up"
         (click)="
-          authenticationService.SignUp(userEmail.value, userPassword.value)
+          authenticationService.SignUp(userEmail.value, userPassword.value, userUsername.value)
         "
       />
     </div>
