@@ -6,6 +6,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
   standalone: true,
   template: ` <div class="authBlock">
     <h3>CONNEXION</h3>
+    <p>{{user?.email}}</p>
     <div class="formGroup">
       <input
         type="text"
@@ -31,12 +32,18 @@ import { AuthenticationService } from '../shared/services/authentication.service
         class="btn btnPrimary"
         value="Sign Up"
         (click)="
-          authenticationService.SignIn(userEmail.value, userPassword.value)
+          authService.SignIn(userEmail.value, userPassword.value)
         "
       />
     </div>
   </div>`,
 })
 export class SignInComponent {
-  constructor(public authenticationService: AuthenticationService) {}
+  user: firebase.default.User | null = null;
+
+  constructor(public authService: AuthenticationService) {
+    this.authService.user$.subscribe(
+      (user) => (this.user = user)
+    )
+  }
 }

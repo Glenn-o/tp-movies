@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { SignInComponent } from './login/signin.component';
-import { SignUpComponent } from './login/signup.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [SignInComponent, SignUpComponent],
+  imports: [RouterOutlet],
   standalone: true,
   selector: 'tp-movies-root',
   templateUrl: './app.component.html',
@@ -11,5 +10,4 @@ import { SignUpComponent } from './login/signup.component';
 })
 
 export class AppComponent {
-
 }
