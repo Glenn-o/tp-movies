@@ -11,13 +11,13 @@ export interface User {
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-  constructor(private readonly af: AngularFirestore) {}
+  constructor(private readonly db: AngularFirestore) {}
 
   createUser (user: User): void {
-    from(this.af.collection<User>('users').add({ ...user }))
+    from(this.db.collection<User>('users').doc(user.userId).set({ ...user }))
   }
 
   getUserInfoById (userId: string): Observable<User[]> {
-    return this.af.collection<User>('users', ref => ref.where('userId', '==', userId).limit(1)).valueChanges()
+    return this.db.collection<User>('users', ref => ref.where('userId', '==', userId).limit(1)).valueChanges()
   }
 }

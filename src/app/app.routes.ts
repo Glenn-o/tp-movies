@@ -3,12 +3,14 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {
   AngularFireAuthGuard,
+  redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
 import { HomeComponent } from './components/home/home.component';
-import { SignUpComponent } from './components/signup.component';
+import { RegisterComponent } from './components/register.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
 
 export const appRoutes: Route[] = [
   { path: '', component: HomeComponent },
@@ -18,15 +20,23 @@ export const appRoutes: Route[] = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-  { path: 'login', component: LoginComponent },
   {
-    path: 'profile/:id', 
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
+  },
+  {
+    path: 'profile/:id',
     component: ProfileComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'register',
-    component: SignUpComponent,
+    component: RegisterComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
   },
+  
 ];
