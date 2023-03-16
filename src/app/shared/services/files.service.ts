@@ -11,7 +11,7 @@ export class FilesService {
   constructor(private readonly db: AngularFirestore, private readonly storage: AngularFireStorage) {}
 
   uploadFile(fileUpload: FileUpload, user: User) {
-    const type = fileUpload.file.type.split('image/')[0]
+    const type = fileUpload.file.type.split('image/')[1]
     const filePath = `/${uuidv4()}.${type}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
