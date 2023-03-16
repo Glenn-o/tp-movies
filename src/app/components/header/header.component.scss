@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px 5px 20px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: gold;
+  div {
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+    img {
+      width: 30px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+}

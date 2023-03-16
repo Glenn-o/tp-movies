@@ -1,0 +1,13 @@
+<header>
+  <div>
+    <img
+      src="../assets/icons/burger_menu.svg"
+      alt="burger menu icon"
+      srcset=""
+    />
+    <a [routerLink]='["/"]'>Movies BDD</a>
+  </div>
+  <nav *ngIf="user">
+    <a [routerLink]='["/profile"]'>{{ user.username }}</a>
+  </nav>
+</header>
