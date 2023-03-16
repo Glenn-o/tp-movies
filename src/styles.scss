@@ -4,7 +4,41 @@ body {
   font-family: sans-serif;
 }
 
+html,
+body,
+tp-movies-root {
+  height: 100%;
+  width: 100%;
+}
+
 a {
   all: unset;
   cursor: pointer;
+}
+
+h3 {
+  margin: 0;
+}
+
+input {
+  border: 0.5px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  &:focus {
+    outline-color: gold;
+  }
+}
+
+
+button {
+  cursor: pointer;
+  background-color: gold;
+  border: 0;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 5px 20px 5px 20px;
+  transition: transform 500ms;
+  &:active {
+    transform: scale(0.95);
+  }
 }
