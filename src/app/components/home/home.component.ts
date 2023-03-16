@@ -13,4 +13,14 @@ export class HomeComponent {
   movies$ = this.apiService.getTrendingMovies();
 
   constructor(private readonly apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.getTrendingMovies();
+  }
+
+  getTrendingMovies(): void {
+    this.apiService.getTrendingMovies().subscribe((movies) => {
+      console.log(movies);
+    });
+  }
 }
