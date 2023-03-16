@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { SignInComponent } from './components/signin.component';
+import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {
   AngularFireAuthGuard,
@@ -18,7 +18,7 @@ export const appRoutes: Route[] = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-  { path: 'login', component: SignInComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'profile/:id', 
     component: ProfileComponent,

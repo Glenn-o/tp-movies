@@ -1,0 +1,22 @@
+<div class="authBlock">
+  <h3>CONNEXION</h3>
+  <form class="formGroup">
+    <input
+      type="text"
+      class="formControl"
+      placeholder="Username"
+      #userEmail
+      required
+    />
+    <input
+      type="password"
+      class="formControl"
+      placeholder="Password"
+      #userPassword
+      required
+    />
+    <button (click)="authService.SignIn(userEmail.value, userPassword.value)">
+      Login
+    </button>
+  </form>
+</div>
