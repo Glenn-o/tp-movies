@@ -10,10 +10,16 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app/app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideState, provideStore } from '@ngrx/store';
+import { userReducer } from './app/ngrx/user.reducer';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
+    provideStore(),
+    provideState("userFeature", userReducer),
+    provideStoreDevtools(),
     provideRouter([
       ...appRoutes
     ]),
