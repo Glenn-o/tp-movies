@@ -33,14 +33,11 @@ export class AuthenticationService {
   SignIn(email: string, password: string): void {
     from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       map((res) => {
-        console.log(res)
         if (res.user) {
           this.usersService.getUserInfoById(res.user?.uid).subscribe((users) => {
-            console.log("USER IN DISPATCH", users)
             this._store.dispatch(UserReceived({ user: users[0] }))
           })
         }
-        console.log("!! USER" + res.user)
         return !!res.user;
       }),
       catchError(() => of(false)),
