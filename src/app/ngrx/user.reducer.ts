@@ -1,4 +1,4 @@
-import { createReducer, on, createSelector } from '@ngrx/store';
+import { createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store';
 import { User } from '../shared/services/users.service';
 import { UserReceived } from './user.action';
 
@@ -17,13 +17,15 @@ export const userReducer = createReducer(
     })
 );
 
-export interface AppSate {
-    selectedUser: IUserState;
-}
+export const userFeatureKey = "selectedUser"
 
-export const selectUser = (state: AppSate) => state.selectedUser;
+export const selectUserState = createFeatureSelector<IUserState>(userFeatureKey)
 
 export const selectUserInfo = createSelector(
-    selectUser,
+    selectUserState,
     (state: IUserState) => state.user
+);
+export const selectUserHeader = createSelector(
+    selectUserInfo,
+    (user: User | null) => ({username : user?.username, avatar: user?.avatar})
 );
