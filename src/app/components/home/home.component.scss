@@ -81,7 +81,11 @@
           &::before {
             content: url('../../../assets/icons/like_outlined.svg');
           }
-
+        
+          &.liked::before {
+            content: url('../../../assets/icons/like_solid.svg');
+          }
+        
           &:hover::before {
             content: url('../../../assets/icons/like_solid.svg');
           }

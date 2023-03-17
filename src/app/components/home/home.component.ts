@@ -1,10 +1,10 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf, NgClass  } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { Movie } from 'src/types/Movies';
 
 @Component({
-  imports: [NgFor, NgIf, AsyncPipe],
+  imports: [NgFor, NgIf, AsyncPipe, NgClass],
   selector: 'tp-movies-home',
   standalone: true,
   styleUrls: ['./home.component.scss'],
@@ -18,14 +18,13 @@ export class HomeComponent {
   likeMovie(movie: Movie) {
     const index = this.likedMovies.findIndex(m => m.id === movie.id);
     if (index === -1) {
+      movie.isLiked = true; 
       this.likedMovies.push(movie);
     } else {
+      movie.isLiked = false; 
       this.likedMovies.splice(index, 1);
     }
   }
-
-
-
 
   openSidebar() {
     this.isSidebarOpen = true;
