@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
+
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { map, catchError, of, Observable, from } from 'rxjs';
+import { map, catchError, of, Observable, from, take } from 'rxjs';
+import { User, UsersService } from './users.service';
+import { Store } from '@ngrx/store'
+import { UserReceived } from 'src/app/ngrx/user.action';
 import { FileUpload } from 'src/app/models/file-upload.model';
 import { FilesService } from './files.service';
-import { User, UsersService } from './users.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   user$: Observable<firebase.default.User | null> = this.afAuth.user;
 
-  constructor(public afAuth: AngularFireAuth, private usersService: UsersService, private filesService: FilesService ) {}
+  constructor(public afAuth: AngularFireAuth, private usersService: UsersService, 
+    private _store: Store, private filesService: FilesService) { }
 
   async SignUp(email: string, password: string, username: string, file: FileUpload | null) {
     return this.afAuth
@@ -26,12 +30,18 @@ export class AuthenticationService {
       });
   }
 
-  async SignIn(email: string, password: string) {
-    return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
+  SignIn(email: string, password: string): void {
+    from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       map((res) => {
+        if (res.user) {
+          this.usersService.getUserInfoById(res.user?.uid).subscribe((users) => {
+            this._store.dispatch(UserReceived({ user: users[0] }))
+          })
+        }
         return !!res.user;
       }),
-      catchError(() => of(false))
-    );
+      catchError(() => of(false)),
+      take(1),
+    ).subscribe();
   }
 }
