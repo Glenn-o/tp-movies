@@ -1,14 +1,23 @@
+<div class="sidebar">
+  <p>Ceci est la sidebar</p>
+</div>
+<div class="sidebar-handle" (mouseenter)="openSidebar()" (mouseleave)="closeSidebar()"></div>
 <div class="container-movies">
   <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
-      <a href="">
+      <div class="movie-container">
         <img
           src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
           alt="{{ movie.original_title }}"
         />
-        <p>{{ movie.original_title }}</p>
-      </a>
+        <div class="movie-info">
+          <p>{{ movie.original_title }}</p>
+        </div>
+      </div>
+      <button (click)="likeMovie(movie)">
+        <span class="like-icon"></span>
+      </button>
     </div>
   </div>
 </div>
