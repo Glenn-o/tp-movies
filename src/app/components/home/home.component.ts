@@ -1,10 +1,11 @@
 import { AsyncPipe, NgFor, NgIf, NgClass  } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { Movie } from 'src/types/Movies';
 
 @Component({
-  imports: [NgFor, NgIf, AsyncPipe, NgClass],
+  imports: [NgFor, NgIf, AsyncPipe, RouterLink, NgClass],
   selector: 'tp-movies-home',
   standalone: true,
   styleUrls: ['./home.component.scss'],

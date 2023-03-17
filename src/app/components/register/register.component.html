@@ -1,0 +1,43 @@
+<div class="authBlock">
+  <h3>INSCRIPTION</h3>
+  <form class="formGroup">
+    <input
+      type="text"
+      class="formControl"
+      placeholder="Username"
+      #userUsername
+      required
+    />
+    <input
+      type="email"
+      class="formControl"
+      placeholder="Email"
+      #userEmail
+      required
+    />
+    <input
+      type="password"
+      class="formControl"
+      placeholder="Password"
+      #userPassword
+      required
+    />
+    <input type="file" #userFile accept=".png, .jpeg, .jpg" />
+    <button
+      (click)="
+        register(
+          userEmail.value,
+          userPassword.value,
+          userUsername.value,
+          userFile.files
+        );
+        $event.preventDefault()
+      "
+    >
+      Register
+    </button>
+    <p>
+      Already have an account ? <a class="link" [routerLink]="['/login']">Login</a>
+    </p>
+  </form>
+</div>

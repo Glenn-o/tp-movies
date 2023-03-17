@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 
 @Component({
@@ -6,11 +7,8 @@ import { AuthenticationService } from '../../shared/services/authentication.serv
   standalone: true,
   styleUrls: ['./login.component.scss'],
   templateUrl: './login.component.html',
+  imports: [RouterLink],
 })
 export class LoginComponent {
-  user: firebase.default.User | null = null;
-
-  constructor(public authService: AuthenticationService) {
-    this.authService.user$.subscribe((user) => (this.user = user));
-  }
+  constructor(public authService: AuthenticationService) {}
 }

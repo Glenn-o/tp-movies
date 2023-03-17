@@ -1,14 +1,11 @@
 import { Route } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import {
   AngularFireAuthGuard,
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
 import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/register.component';
-import { NotFoundComponent } from './components/404/404.component';
+import { DetailsComponent } from './components/details/details.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
@@ -17,31 +14,35 @@ export const appRoutes: Route[] = [
   { path: '', component: HomeComponent },
   {
     path: 'profile',
-    component: ProfileComponent,
+    loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToHome },
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectLoggedInToHome },
   },
   {
     path: 'profile/:id',
-    component: ProfileComponent,
+    loadComponent: () => import('./components/user/user.component').then(m => m.UserComponent),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInToHome },
+    path: 'movie/:id',
+    component: DetailsComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    loadComponent: () => import('./components/404/404.component').then(m => m.NotFoundComponent),
   }
   
 ];

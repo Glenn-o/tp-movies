@@ -6,15 +6,19 @@
   <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
+      <a [routerLink]='["movie", movie.id]'>
       <div class="movie-container">
         <img
           src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
           alt="{{ movie.original_title }}"
+          loading="lazy"
         />
         <div class="movie-info">
           <p>{{ movie.original_title }}</p>
         </div>
       </div>
+    </a>
+      
       <button (click)="likeMovie(movie)">
         <span class="like-icon" [ngClass]="{'liked': movie.isLiked}"></span>
       </button>

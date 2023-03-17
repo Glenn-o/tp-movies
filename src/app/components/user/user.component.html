@@ -1,0 +1,15 @@
+<div>
+  <h3>{{ userInfo?.username }}</h3>
+
+  <div>
+    <img
+      width="100px"
+      height="100px"
+      src="{{ userInfo?.avatar }}"
+      alt="avatar"
+      onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/default.png?alt=media&token=5ec339d7-2c75-42e2-ae4b-b6dfb2572af0'"
+    />
+    <p>username: {{ userInfo?.username }}</p>
+    <p>email: {{ userInfo?.email }}</p>
+  </div>
+</div>
