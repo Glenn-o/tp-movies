@@ -5,9 +5,23 @@
       alt="burger menu icon"
       srcset=""
     />
-    <a [routerLink]='["/"]'>Movies BDD</a>
+    <a [routerLink]="['/']">Movies BDD</a>
   </div>
-  <nav *ngIf="user">
-    <a [routerLink]='["/profile"]'>{{ user.username }}</a>
+  <nav>
+    <div *ngIf="user; else noUser" (click)="handleDropdown()">
+      <img
+        src="{{ user.avatar }}"
+        alt="avatar"
+        onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/default.png?alt=media&token=5ec339d7-2c75-42e2-ae4b-b6dfb2572af0'"
+      />
+      <span>{{ user.username }}</span>
+      <div *ngIf="isDropdownOpen">
+        <a [routerLink]="['/profile']">Profile</a>
+        <div (click)="logout()">Logout</div>
+      </div>
+    </div>
+    <ng-template #noUser>
+      <a [routerLink]="['/login']">Login</a>
+    </ng-template>
   </nav>
 </header>
