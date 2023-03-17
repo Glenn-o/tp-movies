@@ -30,11 +30,11 @@ export class AuthenticationService {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        window.alert('You have been successfully registered!');
         const userId = <string>result.user?.uid;
         const user: User = { email, username, userId, avatar: '' };
         this.usersService.createUser(user);
         file && this.filesService.uploadFile(file, user);
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         window.alert(error.message);
