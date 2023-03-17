@@ -30,7 +30,7 @@ export class UserComponent implements OnInit {
       this.usersService
         .getUserInfoById(id || <string>user?.uid)
         .subscribe((userInfo) => {
-          if (!userInfo.length) this.router.navigateByUrl('/');
+          if (!userInfo.length) this.router.navigateByUrl('/404');
           this.userInfo = userInfo[0];
         });
     });

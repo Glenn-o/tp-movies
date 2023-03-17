@@ -13,7 +13,7 @@ export class RegisterComponent {
 
   register(email: string, password: string, username: string, file: FileList | null) {
     const currentFile = new FileUpload(file && file[0]);
-    this.authenticationService.SignUp(
+    this.authenticationService.signUp(
       email,
       password,
       username,
