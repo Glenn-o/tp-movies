@@ -1,9 +1,9 @@
 export class FileUpload {
   name = '';
   url = '';
-  file: File;
+  file: File | null;
 
-  constructor(file: File) {
+  constructor(file: File | null) {
     this.file = file;
   }
 }

@@ -1,12 +1,26 @@
 <div class="authBlock">
   <h3>CONNEXION</h3>
   <form class="formGroup">
-    <input type="text" class="formControl" placeholder="Username" #userEmail required />
-    <input type="password" class="formControl" placeholder="Password" #userPassword required />
-    <button (click)="
-      authService.SignIn(userEmail.value, userPassword.value);
-      $event.preventDefault();
-    ">
+    <input
+      type="email"
+      class="formControl"
+      placeholder="Email"
+      #userEmail
+      required
+    />
+    <input
+      type="password"
+      class="formControl"
+      placeholder="Password"
+      #userPassword
+      required
+    />
+    <button
+      (click)="
+        authService.SignIn(userEmail.value, userPassword.value);
+        $event.preventDefault()
+      "
+    >
       Login
     </button>
   </form>

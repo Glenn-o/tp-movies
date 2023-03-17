@@ -1,0 +1,49 @@
+<div class="authBlock">
+  <h3>INSCRIPTION</h3>
+  <div class="formGroup">
+    <input
+      type="email"
+      class="formControl"
+      placeholder="Email"
+      #userEmail
+      required
+    />
+  </div>
+  <div class="formGroup">
+    <input
+      type="text"
+      class="formControl"
+      placeholder="Username"
+      #userUsername
+      required
+    />
+  </div>
+  <div class="formGroup">
+    <input
+      type="password"
+      class="formControl"
+      placeholder="Password"
+      #userPassword
+      required
+    />
+  </div>
+  <div>
+    <input type="file" #userFile accept=".png, .jpeg, .jpg" />
+  </div>
+
+  <div class="formGroup">
+    <input
+      type="button"
+      class="btn btnPrimary"
+      value="Sign Up"
+      (click)="
+        register(
+          userEmail.value,
+          userPassword.value,
+          userUsername.value,
+          userFile.files
+        )
+      "
+    />
+  </div>
+</div>
