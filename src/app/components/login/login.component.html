@@ -2,9 +2,9 @@
   <h3>CONNEXION</h3>
   <form class="formGroup">
     <input
-      type="text"
+      type="email"
       class="formControl"
-      placeholder="Username"
+      placeholder="Email"
       #userEmail
       required
     />
@@ -15,7 +15,12 @@
       #userPassword
       required
     />
-    <button (click)="authService.SignIn(userEmail.value, userPassword.value)">
+    <button
+      (click)="
+        authService.SignIn(userEmail.value, userPassword.value);
+        $event.preventDefault()
+      "
+    >
       Login
     </button>
   </form>

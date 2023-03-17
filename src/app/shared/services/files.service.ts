@@ -10,7 +10,7 @@ export class FilesService {
   constructor(private readonly db: AngularFirestore, private readonly storage: AngularFireStorage) {}
 
   uploadFile(fileUpload: FileUpload, user: User) {
-    const filePath = `/${fileUpload.file.name}`;
+    const filePath = `/${fileUpload.file?.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
 
@@ -18,7 +18,7 @@ export class FilesService {
       finalize(() => {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           fileUpload.url = downloadURL;
-          fileUpload.name = fileUpload.file.name;
+          fileUpload.name = fileUpload.file?.name as string;
           this.saveFileData(fileUpload, user);
         });
       })

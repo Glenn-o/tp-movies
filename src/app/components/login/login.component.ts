@@ -8,9 +8,6 @@ import { AuthenticationService } from '../../shared/services/authentication.serv
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  user: firebase.default.User | null = null;
-
   constructor(public authService: AuthenticationService) {
-    this.authService.user$.subscribe((user) => (this.user = user));
   }
 }
