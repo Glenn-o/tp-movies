@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
       this.usersService
         .getUserInfoById(<string>user?.uid)
         .subscribe((userInfo) => {
-          if (!userInfo.length) this.router.navigateByUrl('/');
+          if (!userInfo.length) this.router.navigateByUrl('/404');
           this.userInfo = userInfo[0];
           this.username = userInfo[0].username;
           this.email = userInfo[0].email;

@@ -2,10 +2,11 @@
   <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
-      <a href="">
+      <a [routerLink]='["movie", movie.id]'>
         <img
           src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
           alt="{{ movie.original_title }}"
+          loading="lazy"
         />
         <p>{{ movie.original_title }}</p>
       </a>
