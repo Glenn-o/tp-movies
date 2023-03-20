@@ -3,13 +3,14 @@
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
       <a [routerLink]='["movie", movie.id]'>
-        <img
-          src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
-          alt="{{ movie.original_title }}"
-          loading="lazy"
-        />
+        <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.original_title }}" loading="lazy" />
         <p>{{ movie.original_title }}</p>
       </a>
+    </div>
+    <div *ngIf="page">
+      <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}"><button >{{page-1}}</button></a>
+      <p>{{page}}</p>
+      <a [routerLink]="['/']" [queryParams]="{page: page+1}"><button>{{page+1}}</button></a>
     </div>
   </div>
 </div>

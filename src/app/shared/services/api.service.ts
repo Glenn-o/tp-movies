@@ -11,9 +11,9 @@ import { Trending } from 'src/types/Movies';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  public getTrendingMovies(): Observable<Trending> {
+  public getTrendingMovies(page: number): Observable<Trending> {
     return this.httpClient.get<Trending>(
-      'https://api.themoviedb.org/3/trending/movie/week?api_key=498202a6bb5540555f8ae398a434f702',
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=498202a6bb5540555f8ae398a434f702&page=${page}`,
     );
   }
 
