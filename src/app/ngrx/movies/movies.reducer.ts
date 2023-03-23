@@ -1,6 +1,6 @@
 import { createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store';
 import { Trending } from 'src/types/Movies';
-import { moviesReceived } from '../movies.action';
+import { MoviesReceived } from './movies.action';
 
 export interface IMoviesState {
     movies: Trending | null;
@@ -12,7 +12,7 @@ export const initialMoviesState:IMoviesState = {
 
 export const moviesReducer = createReducer(
     initialMoviesState,
-    on(moviesReceived, (state, {movies}) => {
+    on(MoviesReceived, (state, {movies}) => {
       return {...state, movies}
     })
 );
