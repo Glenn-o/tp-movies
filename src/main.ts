@@ -12,13 +12,15 @@ import { appRoutes } from './app/app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideState, provideStore } from '@ngrx/store';
-import { userFeatureKey, userReducer } from './app/ngrx/user.reducer';
+import { userFeatureKey, userReducer } from './app/ngrx/user/user.reducer';
+import { MoviesFeatureKey, moviesReducer } from './app/ngrx/movies/movies.reducer';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideStore(),
     provideState(userFeatureKey, userReducer),
+    provideState(MoviesFeatureKey, moviesReducer),
     provideStoreDevtools(),
     provideRouter([
       ...appRoutes
