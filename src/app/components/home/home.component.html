@@ -10,7 +10,7 @@
     <div *ngIf="page">
       <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}"><button >{{page-1}}</button></a>
       <p>{{page}}</p>
-      <a [routerLink]="['/']" [queryParams]="{page: page+1}"><button>{{page+1}}</button></a>
+      <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/']" [queryParams]="{page: page+1}"><button>{{page+1}}</button></a>
     </div>
   </div>
 </div>
