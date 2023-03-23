@@ -19,7 +19,7 @@
       </div>
     </a>
       
-      <button (click)="likeMovie(movie)">
+      <button (click)="isLiked(movie) ? unlikeMovie(movie) : likeMovie(movie)">
         <span class="like-icon" [ngClass]="{'liked': isLiked(movie)}"></span>
       </button>
     </div>

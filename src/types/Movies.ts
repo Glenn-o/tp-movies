@@ -13,6 +13,7 @@ export type Trending = {
 };
 
 export type Like = {
+  id?: string;
   movieId: number;
   movieTitle: string;
   userId: string;

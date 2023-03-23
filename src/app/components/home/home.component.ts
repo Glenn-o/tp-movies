@@ -1,7 +1,9 @@
-import { AsyncPipe, NgFor, NgIf, NgClass  } from '@angular/common';
-import { Component, Renderer2 } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf, NgClass } from '@angular/common';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { take } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { LikesService } from 'src/app/shared/services/likes.service';
 import { Like, Movie } from 'src/types/Movies';
 
 @Component({
@@ -11,24 +13,34 @@ import { Like, Movie } from 'src/types/Movies';
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   movies$ = this.apiService.getTrendingMovies();
   likes: Like[] = [];
   isSidebarOpen = false;
 
+  ngOnInit(): void {
+    this.likesService.getLikesByUserId('1').subscribe((likes: Like[]) => {
+      this.likes = likes
+    }, take(1))
+  }
+
+
   likeMovie(movie: Movie) {
-    const index = this.likes.findIndex(like => like.movieId === movie.id && like.userId === '1');
-    if (index === -1) {
       const newLike: Like = {
         movieId: movie.id,
         movieTitle: movie.original_title,
         userId: '1',
         username: 'test'
       }
-      this.likes.push(newLike);
-    } else {
-      this.likes.splice(index, 1);
-    }
+      this.likesService.likeMovie(newLike).subscribe(() =>  {
+        this.likes.push(newLike)
+      }, take(1));
+  }
+
+  unlikeMovie(movie: Movie) {
+    this.likesService.unlikeMovie(movie.id, "1").subscribe(() => {
+      this.likes = this.likes.filter(like => like.movieId !== movie.id);
+    }, take(1));
   }
 
   isLiked(movie: Movie): boolean {
@@ -39,7 +51,7 @@ export class HomeComponent {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     const sidebar = document.querySelector('.sidebar');
-    if(this.isSidebarOpen) {
+    if (this.isSidebarOpen) {
       this.renderer.addClass(sidebar, 'open');
     } else {
       this.renderer.removeClass(sidebar, 'open');
@@ -48,6 +60,7 @@ export class HomeComponent {
 
   constructor(
     private readonly apiService: ApiService,
-    private readonly renderer: Renderer2
-  ) {}
+    private readonly renderer: Renderer2,
+    private readonly likesService: LikesService,
+  ) { }
 }
