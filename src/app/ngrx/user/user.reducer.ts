@@ -1,5 +1,5 @@
 import { createReducer, on, createSelector, createFeatureSelector } from '@ngrx/store';
-import { User } from '../shared/services/users.service';
+import { User } from '../../shared/services/users.service';
 import { UserReceived } from './user.action';
 
 export interface IUserState {

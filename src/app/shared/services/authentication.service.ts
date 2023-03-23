@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, catchError, of, Observable, from, take } from 'rxjs';
 import { User, UsersService } from './users.service';
-import { Store } from '@ngrx/store';
-import { UserReceived } from 'src/app/ngrx/user.action';
+import { Store } from '@ngrx/store'
+import { UserReceived } from 'src/app/ngrx/user/user.action';
 import { FileUpload } from 'src/app/models/file-upload.model';
 import { FilesService } from './files.service';
 import { Router } from '@angular/router';
