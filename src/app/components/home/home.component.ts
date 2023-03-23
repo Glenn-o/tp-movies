@@ -31,7 +31,7 @@ export class HomeComponent {
     if (page) {
       this.movies$ = this.apiService.getTrendingMovies(page).pipe(
         catchError(() => {
-          page = 1;
+          this.page = 1;
           return this.apiService.getTrendingMovies(1);
         }),
       );
