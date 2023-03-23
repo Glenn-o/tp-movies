@@ -1,7 +1,7 @@
 <div class="sidebar">
   <p>Ceci est la sidebar</p>
 </div>
-<div class="sidebar-handle" (mouseenter)="openSidebar()" (mouseleave)="closeSidebar()"></div>
+<div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">
   <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
@@ -20,7 +20,7 @@
     </a>
       
       <button (click)="likeMovie(movie)">
-        <span class="like-icon" [ngClass]="{'liked': movie.isLiked}"></span>
+        <span class="like-icon" [ngClass]="{'liked': isLiked(movie)}"></span>
       </button>
     </div>
   </div>

@@ -2,7 +2,7 @@ import { AsyncPipe, NgFor, NgIf, NgClass  } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { Movie } from 'src/types/Movies';
+import { Like, Movie } from 'src/types/Movies';
 
 @Component({
   imports: [NgFor, NgIf, AsyncPipe, RouterLink, NgClass],
@@ -13,30 +13,37 @@ import { Movie } from 'src/types/Movies';
 })
 export class HomeComponent {
   movies$ = this.apiService.getTrendingMovies();
-  likedMovies: Movie[] = [];
+  likes: Like[] = [];
   isSidebarOpen = false;
 
   likeMovie(movie: Movie) {
-    const index = this.likedMovies.findIndex(m => m.id === movie.id);
+    const index = this.likes.findIndex(like => like.movieId === movie.id && like.userId === '1');
     if (index === -1) {
-      movie.isLiked = true; 
-      this.likedMovies.push(movie);
+      const newLike: Like = {
+        movieId: movie.id,
+        movieTitle: movie.original_title,
+        userId: '1',
+        username: 'test'
+      }
+      this.likes.push(newLike);
     } else {
-      movie.isLiked = false; 
-      this.likedMovies.splice(index, 1);
+      this.likes.splice(index, 1);
     }
   }
 
-  openSidebar() {
-    this.isSidebarOpen = true;
-    const sidebar = document.querySelector('.sidebar');
-    this.renderer.addClass(sidebar, 'open');
+  isLiked(movie: Movie): boolean {
+    return this.likes.some(like => like.movieId === movie.id && like.userId === '1');
   }
 
-  closeSidebar() {
-    this.isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
     const sidebar = document.querySelector('.sidebar');
-    this.renderer.removeClass(sidebar, 'open');
+    if(this.isSidebarOpen) {
+      this.renderer.addClass(sidebar, 'open');
+    } else {
+      this.renderer.removeClass(sidebar, 'open');
+    }
   }
 
   constructor(

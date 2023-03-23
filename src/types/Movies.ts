@@ -11,3 +11,10 @@ export type Trending = {
   total_results: number;
   total_pages: number;
 };
+
+export type Like = {
+  movieId: number;
+  movieTitle: string;
+  userId: string;
+  username: string;
+}
