@@ -13,25 +13,31 @@
   padding: 20px;
   box-sizing: border-box;
 
-  .like-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+}
+.news-bar-title {
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-size: large;
+}
 
-  .username {
-    font-weight: bold;
-    margin-right: 10px;
-  }
+.like-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  .like-text {
-    margin-right: 10px;
-    font-weight: normal;
-  }
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+}
 
-  .movie.title {
-    font-weight: bold;
-  }
+.like-text {
+  margin-right: 10px;
+  font-weight: normal;
+}
+
+.movie.title {
+  font-weight: bold;
 }
 
 .sidebar.open {

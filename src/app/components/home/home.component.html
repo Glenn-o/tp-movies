@@ -1,12 +1,18 @@
 <div class="sidebar">
-  <p>News Feed</p>
+  <p class="news-bar-title">News Feed</p>
   <div *ngIf="newLikes$ | async as likes">
     <div *ngFor="let like of likes">
       <div class="like-info">
         <span class="username">
-          {{like.username}}
+          <a [routerLink]='["profil", like.userId]'>
+          <span>
+            {{like.username}}
+          </span>
+        </a>
           <span class="like-text">liked the movie</span>
-          <span class="movie-title">{{like.movieTitle}}</span>
+          <a [routerLink]='["movie", like.movieId]'>
+            <span class="movie-title">{{like.movieTitle}}</span>
+          </a>
         </span>
       </div>
     </div>

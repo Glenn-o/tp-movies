@@ -22,8 +22,6 @@ export class HomeComponent implements OnInit {
   likes: Like[] = [];
   isSidebarOpen = false;
 
-
-
   ngOnInit(): void {
     this.likesService.getLikesByUserId('1').subscribe((likes: Like[]) => {
       this.likes = likes
@@ -53,12 +51,6 @@ export class HomeComponent implements OnInit {
   isLiked(movie: Movie): boolean {
     return this.likes.some(like => like.movieId === movie.id && like.userId === '1');
   }
-
-  // getLAllLikes() {
-  //   this.likesService.getAllLikes().subscribe((likes: Like[]) => {
-  //     return likes;
-  //   }, take(1));
-  // }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
