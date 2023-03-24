@@ -3,11 +3,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, take } from 'rxjs';
-import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { LikesService } from 'src/app/shared/services/likes.service';
-import { User, UsersService } from 'src/app/shared/services/users.service';
+import { UsersService } from 'src/app/shared/services/users.service';
 import { Like, Movie, Trending } from 'src/types/Movies';
 
 @Component({
