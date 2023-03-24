@@ -21,10 +21,14 @@ div {
     input {
       margin-top: 10px;
       font-size: 1.1em;
+      min-height: 25px;
     }
     button {
       margin-top: 20px;
       font-size: 1em;
+    }
+    webcam, img {
+      margin: 20px;
     }
   }
 }

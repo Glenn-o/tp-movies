@@ -6,9 +6,11 @@ import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilesService } from 'src/app/shared/services/files.service';
 import { FileUpload } from 'src/app/models/file-upload.model';
+import { WebcamImage, WebcamModule } from 'ngx-webcam';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
-  imports: [NgIf, FormsModule],
+  imports: [NgIf, FormsModule, WebcamModule],
   selector: 'tp-movies-profile',
   standalone: true,
   styleUrls: ['./profile.component.scss'],
@@ -20,6 +22,9 @@ export class ProfileComponent implements OnInit {
   email: string | undefined = undefined;
   avatar: string | undefined = undefined;
   isEditing: boolean;
+  isWebcam = false;
+  webcamImage: WebcamImage | null = null;
+  private trigger: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthenticationService,
@@ -54,6 +59,8 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isWebcam = false;
+    this.webcamImage = null;
     if (!this.username?.length) {
       this.username = this.userInfo?.username;
     }
@@ -85,6 +92,44 @@ export class ProfileComponent implements OnInit {
     this.username = this.userInfo?.username;
     this.email = this.userInfo?.email;
     this.avatar = this.userInfo?.avatar;
+    this.isWebcam = false;
+    this.webcamImage = null;
     this.handleEditing();
+  }
+
+  displayWebcam(): void {
+    this.isWebcam = true;
+  }
+
+  takePicture(): void {
+    this.trigger.next();
+  }
+
+  handleImage(webcamImage: WebcamImage): void {
+    const input = <HTMLInputElement>(
+      document.querySelector('input[type="file"]')
+    );
+    this.urltoFile(webcamImage.imageAsDataUrl, 'avatar.jpeg', 'image/jpeg').then(
+      function (file) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        input.files = dataTransfer.files;
+      },
+    );
+    this.webcamImage = webcamImage;
+  }
+
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+
+  async urltoFile(url: string, filename: string, mimeType: string) {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
   }
 }
