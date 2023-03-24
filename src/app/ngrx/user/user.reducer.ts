@@ -25,6 +25,7 @@ export const selectUserInfo = createSelector(
     selectUserState,
     (state: IUserState) => state.user
 );
+
 export const selectUserHeader = createSelector(
     selectUserInfo,
     (user: User | null) => ({username : user?.username, avatar: user?.avatar})
