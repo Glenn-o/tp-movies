@@ -1,30 +1,21 @@
 <div class="authBlock">
   <h3>REGISTER</h3>
   <form class="formGroup">
-    <input
-      type="text"
-      class="formControl"
-      placeholder="Username"
-      #userUsername
-      required
-    />
-    <input
-      type="email"
-      class="formControl"
-      placeholder="Email"
-      #userEmail
-      required
-    />
-    <input
-      type="password"
-      class="formControl"
-      placeholder="Password"
-      #userPassword
-      required
-    />
+    <input type="text" class="formControl" placeholder="Username" #userUsername required />
+    <input type="email" class="formControl" placeholder="Email" #userEmail required />
+    <input type="password" class="formControl" placeholder="Password" #userPassword required />
     <input type="file" #userFile accept=".png, .jpeg, .jpg" />
-    <button
-      (click)="
+    <button *ngIf="!isWebcam" (click)="displayWebcam()">Or take a picture ?</button>
+    <div *ngIf="isWebcam">
+      <div *ngIf="!webcamImage">
+        <webcam [width]="200" [height]="150" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
+        <button (click)="takePicture(); $event.preventDefault()">📸 Take a picture</button>
+      </div>
+      <div class="snapshot" *ngIf="webcamImage">
+        <img [width]="200"[height]="150" [src]="webcamImage.imageAsDataUrl" alt="avatar picture"/>
+      </div>
+    </div>
+    <button (click)="
         register(
           userEmail.value,
           userPassword.value,
@@ -32,8 +23,7 @@
           userFile.files
         );
         $event.preventDefault()
-      "
-    >
+      ">
       Register
     </button>
     <p>
