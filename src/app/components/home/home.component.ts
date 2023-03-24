@@ -1,10 +1,10 @@
 import { AsyncPipe, NgFor, NgIf, NgClass } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { take } from 'rxjs';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Observable, catchError, take } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { LikesService } from 'src/app/shared/services/likes.service';
-import { Like, Movie } from 'src/types/Movies';
+import { Like, Movie, Trending } from 'src/types/Movies';
 
 @Component({
   imports: [NgFor, NgIf, AsyncPipe, RouterLink, NgClass],
@@ -17,10 +17,12 @@ import { Like, Movie } from 'src/types/Movies';
 export class HomeComponent implements OnInit {
   
   arrivalTime: Date = new Date();
-  movies$ = this.apiService.getTrendingMovies();
   newLikes$ = this.likesService.getNewLikes(this.arrivalTime);
   likes: Like[] = [];
   isSidebarOpen = false;
+  id$ = this.route.queryParams;
+  page = 1;
+  movies$: Observable<Trending> | null = null;
 
   ngOnInit(): void {
     this.likesService.getLikesByUserId('1').subscribe((likes: Like[]) => {
@@ -62,9 +64,28 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getMovies(page: number = 1) {
+    if (page) {
+      this.movies$ = this.apiService.getTrendingMovies(page).pipe(
+        catchError(() => {
+          this.page = 1;
+          return this.apiService.getTrendingMovies(1);
+        }),
+      );
+    } else {
+      this.movies$ = this.apiService.getTrendingMovies(page);
+    }
+  }
+
   constructor(
     private readonly apiService: ApiService,
     private readonly renderer: Renderer2,
     private readonly likesService: LikesService,
-  ) { }
+    private readonly route: ActivatedRoute,
+  ) {
+    this.id$.subscribe((page) => {
+      this.page = Number(page['page']) || 1
+      this.getMovies(Number(this.page))
+    }, take(1));
+   }
 }
