@@ -14,6 +14,10 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideState, provideStore } from '@ngrx/store';
 import { userFeatureKey, userReducer } from './app/ngrx/user/user.reducer';
 import { MoviesFeatureKey, moviesReducer } from './app/ngrx/movies/movies.reducer';
+import { UserEffect } from './app/ngrx/user/user.effect';
+import { provideEffects } from '@ngrx/effects';
+
+
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -21,6 +25,7 @@ bootstrapApplication(AppComponent, {
     provideStore(),
     provideState(userFeatureKey, userReducer),
     provideState(MoviesFeatureKey, moviesReducer),
+    provideEffects(UserEffect),
     provideStoreDevtools(),
     provideRouter([
       ...appRoutes
