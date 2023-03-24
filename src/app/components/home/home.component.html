@@ -1,5 +1,16 @@
 <div class="sidebar">
-  <p>Ceci est la sidebar</p>
+  <p>News Feed</p>
+  <div *ngIf="newLikes$ | async as likes">
+    <div *ngFor="let like of likes">
+      <div class="like-info">
+        <span class="username">
+          {{like.username}}
+          <span class="like-text">liked the movie</span>
+          <span class="movie-title">{{like.movieTitle}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">

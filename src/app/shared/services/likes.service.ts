@@ -26,4 +26,8 @@ export class LikesService {
     getLikesByUserId(userId: string): Observable<Like[]> {
         return this.db.collection<Like>('likes', ref => ref.where('userId', '==', userId)).valueChanges();
     }
+
+    getNewLikes(date: Date): Observable<Like[]> {
+        return this.db.collection<Like>('likes', ref => ref.where('createdAt', '>=', date)).valueChanges();
+    }
 }

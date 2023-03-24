@@ -10,8 +10,29 @@
   z-index: 10;
   transition: all 0.3s ease;
   overflow: auto;
-}
+  padding: 20px;
+  box-sizing: border-box;
 
+  .like-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .username {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .like-text {
+    margin-right: 10px;
+    font-weight: normal;
+  }
+
+  .movie.title {
+    font-weight: bold;
+  }
+}
 
 .sidebar.open {
   right: 0;
@@ -36,18 +57,17 @@
     flex-wrap: wrap;
     width: 90%;
     margin: 0 auto;
-   
+
     div {
       position: relative;
       border: 1px solid black;
       width: 200px;
       margin-bottom: 20px;
-    
 
       .movie-container {
         margin-bottom: 0px;
       }
-      
+
       .movie-info {
         position: absolute;
         bottom: 0;
@@ -64,7 +84,7 @@
         transition: all 0.3s ease;
         opacity: 0;
       }
-      
+
       img {
         width: 100%;
       }
@@ -81,11 +101,11 @@
           &::before {
             content: url('../../../assets/icons/like_outlined.svg');
           }
-        
+
           &.liked::before {
             content: url('../../../assets/icons/like_solid.svg');
           }
-        
+
           &:hover::before {
             content: url('../../../assets/icons/like_solid.svg');
           }
@@ -95,7 +115,6 @@
       &:hover .movie-info {
         opacity: 1;
       }
-
     }
   }
 }

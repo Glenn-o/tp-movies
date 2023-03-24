@@ -18,4 +18,5 @@ export type Like = {
   movieTitle: string;
   userId: string;
   username: string;
+  createdAt: Date;
 }
