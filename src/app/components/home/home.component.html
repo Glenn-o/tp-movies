@@ -1,11 +1,44 @@
+<div class="sidebar">
+  <p class="news-bar-title">News Feed</p>
+  <div *ngIf="newLikes$ | async as likes">
+    <div *ngFor="let like of likes">
+      <div class="like-info">
+        <span class="username">
+          <a [routerLink]='["profil", like.userId]'>
+          <span>
+            {{like.username}}
+          </span>
+        </a>
+          <span class="like-text">liked the movie</span>
+          <a [routerLink]='["movie", like.movieId]'>
+            <span class="movie-title">{{like.movieTitle}}</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">
   <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
       <a [routerLink]='["movie", movie.id]'>
-        <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.original_title }}" loading="lazy" />
-        <p>{{ movie.original_title }}</p>
-      </a>
+      <div class="movie-container">
+        <img
+          src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+          alt="{{ movie.original_title }}"
+          loading="lazy"
+        />
+        <div class="movie-info">
+          <p>{{ movie.original_title }}</p>
+        </div>
+      </div>
+    </a>
+      
+      <button (click)="isLiked(movie) ? unlikeMovie(movie) : likeMovie(movie)">
+        <span class="like-icon" [ngClass]="{'liked': isLiked(movie)}"></span>
+      </button>
     </div>
     <div *ngIf="page">
       <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}"><button >{{page-1}}</button></a>
