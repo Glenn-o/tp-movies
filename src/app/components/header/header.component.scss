@@ -45,6 +45,7 @@ header {
         overflow: hidden;
         border-radius: 10px;
         box-shadow: 5px 5px 15px 5px #98989887;
+        z-index: 1;
         & > * {
           display: flex;
           justify-content: center;
