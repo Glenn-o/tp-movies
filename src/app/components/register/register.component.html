@@ -1,6 +1,7 @@
 <div class="authBlock">
   <h3>REGISTER</h3>
   <form class="formGroup">
+    <p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
     <input type="text" class="formControl" placeholder="Username" #userUsername required />
     <input type="email" class="formControl" placeholder="Email" #userEmail required />
     <input type="password" class="formControl" placeholder="Password" #userPassword required />
