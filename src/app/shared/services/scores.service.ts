@@ -17,7 +17,16 @@ export class ScoresService {
         );
     }
 
-    getScoreByUserId(userId: string, movieId: number): Observable<Score | undefined> {
+    updateScore(score: Score): Observable<any> {
+        return from(
+            this.db
+                .collection<Score>('scores')
+                .doc(`${score.movieId}${score.userId}`)
+                .update({ ...score }),
+        );
+    }
+
+    getScoreByUserId(userId: string, movieId: string): Observable<Score | undefined> {
         return this.db.collection<Score>('scores').doc(`${movieId}${userId}`).valueChanges();
     }
 }
