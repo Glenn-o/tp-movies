@@ -20,3 +20,11 @@ export type Like = {
   username: string;
   createdAt: Date;
 }
+
+export type Score = {
+  id?: string;
+  movieId: number;
+  userId: string;
+  score: number;
+  createdAt: Date;
+}
