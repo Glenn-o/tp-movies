@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf, CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of, take } from 'rxjs';
@@ -6,7 +6,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { User } from 'src/app/shared/services/users.service';
 import { Casts } from 'src/types/Casts';
 import { MovieDetails } from 'src/types/MovieDetails';
-import { Movie, Score } from 'src/types/Movies';
+import { Score } from 'src/types/Movies';
 import { Store } from '@ngrx/store';
 import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { ScoresService } from 'src/app/shared/services/scores.service';
@@ -16,7 +16,7 @@ import { ScoresService } from 'src/app/shared/services/scores.service';
   standalone: true,
   templateUrl: 'details.component.html',
   styleUrls: ['./details.component.scss'],
-  imports: [AsyncPipe, NgIf, NgFor],
+  imports: [AsyncPipe, NgIf, NgFor, CommonModule],
 })
 export class DetailsComponent implements OnInit {
   id = '';
@@ -51,13 +51,14 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  scoreMovie(movieId: string, score: number) {
+  scoreMovie(score: number) {
     if (this.user !== null && this.score === undefined) 
     {
       const newScore: Score = {
-        movieId: movieId,
+        movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
+        username: this.user.username,
         score: score
       }
       this.scoresService.scoreMovie(newScore).subscribe(() =>  {
@@ -67,9 +68,10 @@ export class DetailsComponent implements OnInit {
     if (this.user !== null && this.score !== undefined) 
     {
       const newScore: Score = {
-        movieId: movieId,
+        movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
+        username: this.user.username,
         score: score
       }
       this.scoresService.updateScore(newScore).subscribe(() =>  {
@@ -77,4 +79,6 @@ export class DetailsComponent implements OnInit {
       }, take(1));
     }
   }
+
+  
 }

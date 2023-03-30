@@ -26,5 +26,6 @@ export type Score = {
   movieId: string;
   userId: string;
   score: number;
+  username: string;
   createdAt: Date;
 }

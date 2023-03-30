@@ -1,5 +1,12 @@
 <div *ngIf="movie$ | async as movie" class="container-details">
   <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.original_title }}" loading="lazy" />
+  <div class="rating">
+    <span class="star" (click)="scoreMovie(1)" [ngClass]="{filled: score !== undefined && score.score >= 1}"> &#9733;</span>
+    <span class="star" (click)="scoreMovie(2)" [ngClass]="{filled: score !== undefined && score.score >= 2}"> &#9733;</span>
+    <span class="star" (click)="scoreMovie(3)" [ngClass]="{filled: score !== undefined && score.score >= 3}"> &#9733;</span>
+    <span class="star" (click)="scoreMovie(4)" [ngClass]="{filled: score !== undefined && score.score >= 4}"> &#9733;</span>
+    <span class="star" (click)="scoreMovie(5)" [ngClass]="{filled: score !== undefined && score.score >= 5}"> &#9733;</span>
+  </div>
   <div>{{movie.original_title}}</div>
   <p>synopsis: <br>{{movie.overview}}</p>
   <p>Release date: {{movie.release_date}}</p>
