@@ -57,6 +57,7 @@
 }
 
 .container-movies {
+  margin-top: 50px;
   div {
     display: flex;
     justify-content: center;
@@ -66,7 +67,6 @@
 
     div {
       position: relative;
-      border: 1px solid black;
       width: 200px;
       margin-bottom: 20px;
 
@@ -99,9 +99,11 @@
         background-color: white;
         font-weight: bold;
         color: black;
-        border: none;
-        border-radius: 5px;
         cursor: pointer;
+        width: 100%;
+        border: 2px solid #f2f2f2;
+        border-radius: 0px;
+        height: 64px;
 
         .like-icon {
           &::before {
@@ -122,5 +124,37 @@
         opacity: 1;
       }
     }
+  }
+  .placeholder {
+    width: 200px;
+    height: 300px;
+    background-color: #f2f2f2;
+  }
+  .pagination {
+    div {
+      display: flex;
+      align-items: center;
+      border: none;
+      width: 100%;
+      p {
+        background-color: gold;
+      }
+      p, a {
+        margin: 0px 10px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #f2f2f2;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .movie-info {
+    opacity: 1 !important;
   }
 }
