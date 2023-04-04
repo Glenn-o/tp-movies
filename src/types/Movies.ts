@@ -24,6 +24,7 @@ export type Like = {
 export type Score = {
   id?: string;
   movieId: string;
+  movieTitle: string;
   userId: string;
   score: number;
   username: string;

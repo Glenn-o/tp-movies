@@ -24,6 +24,7 @@ export class DetailsComponent implements OnInit {
   casts$: Observable<Casts> | null = null;
   user: User | null = null;
   score: Score | undefined = undefined;
+  movieTitle = '';
 
   constructor(
     private readonly apiService: ApiService,
@@ -36,6 +37,7 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = <string>this.route.snapshot.paramMap.get('id');
+    this.movieTitle = <string>this.route.snapshot.paramMap.get('title');
     this.movie$ = this.apiService.getMovieById(this.id).pipe(catchError(() => {
       this.router.navigate(['/404'])
       return of(null)
@@ -55,6 +57,7 @@ export class DetailsComponent implements OnInit {
     if (this.user !== null && this.score === undefined) 
     {
       const newScore: Score = {
+        movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
@@ -68,6 +71,7 @@ export class DetailsComponent implements OnInit {
     if (this.user !== null && this.score !== undefined) 
     {
       const newScore: Score = {
+        movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),

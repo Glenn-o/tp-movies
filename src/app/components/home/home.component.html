@@ -1,14 +1,12 @@
 <div class="sidebar">
   <p class="news-bar-title">News Feed</p>
-  <div *ngIf="newLikes$ | async as likes">
-    <div *ngFor="let like of likes">
+  <ng-container *ngIf="newLikes$ | async as newLikes">
+    <div *ngFor="let like of newLikes?.newLikes">
       <div class="like-info">
         <span class="username">
           <a [routerLink]='["profile", like.userId]'>
-          <span>
-            {{like.username}}
-          </span>
-        </a>
+            <span>{{like.username}}</span>
+          </a>
           <span class="like-text">liked the movie</span>
           <a [routerLink]='["movie", like.movieId]'>
             <span class="movie-title">{{like.movieTitle}}</span>
@@ -16,8 +14,19 @@
         </span>
       </div>
     </div>
+    <div *ngFor="let score of newLikes?.newScores">
+      <div class="score-info">
+        <span class="username">
+          <a [routerLink]='["profile", score.userId]'>
+            <span>{{score.username}}</span>
+          </a>
+          <span class="score-text">scored the movie</span>
+          <a [routerLink]='["movie", score.movieId]'>
+            <span class="movie-title">{{score.movieTitle}}</span>
+          </a>
+        </span>
+      </div>
   </div>
-</div>
 <div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">
   <h1>Movies</h1>

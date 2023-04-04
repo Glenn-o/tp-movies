@@ -2,12 +2,15 @@ import { AsyncPipe, NgFor, NgIf, NgClass } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, catchError, take } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable, catchError, combineLatest, take } from 'rxjs';
 import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { LikesService } from 'src/app/shared/services/likes.service';
 import { User } from 'src/app/shared/services/users.service';
 import { Like, Movie, Trending } from 'src/types/Movies';
+import { ScoresService } from 'src/app/shared/services/scores.service';
+
 
 @Component({
   imports: [NgFor, NgIf, AsyncPipe, RouterLink, NgClass],
@@ -20,7 +23,7 @@ import { Like, Movie, Trending } from 'src/types/Movies';
 export class HomeComponent implements OnInit {
   
   arrivalTime: Date = new Date();
-  newLikes$ = this.likesService.getNewLikes(this.arrivalTime);
+  newLikes$ = combineLatest([this.likesService.getNewLikes(this.arrivalTime), this.scoreService.getNewScores(this.arrivalTime)]).pipe(map(([newLikes, newScores]) => ({ newLikes, newScores})))
   likes: Like[] = [];
   isSidebarOpen = false;
   id$ = this.route.queryParams;
@@ -97,6 +100,7 @@ export class HomeComponent implements OnInit {
     private readonly likesService: LikesService,
     private readonly route: ActivatedRoute,
     private readonly store: Store<User>,
+    private readonly scoreService: ScoresService,
   ) {
     this.id$.subscribe((page) => {
       this.page = Number(page['page']) || 1
