@@ -8,7 +8,7 @@
     <a [routerLink]="['/']">Movies BDD</a>
   </div>
   <nav>
-    <div *ngIf="user; else noUser" (click)="handleDropdown()">
+    <div *ngIf="user$ | async as user; else noUser" (click)="handleDropdown()">
       <img
         src="{{ user.avatar }}"
         alt="avatar"
