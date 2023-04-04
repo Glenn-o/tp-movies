@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, catchError, of, Observable, from, take } from 'rxjs';
 import { User, UsersService } from './users.service';
-import { Store } from '@ngrx/store'
+import { Store } from '@ngrx/store';
 import { UserReceived } from 'src/app/ngrx/user/user.action';
 import { FileUpload } from 'src/app/models/file-upload.model';
 import { FilesService } from './files.service';
@@ -21,49 +21,46 @@ export class AuthenticationService {
     private router: Router,
   ) {}
 
-  async signUp(
+  signUp(
     email: string,
     password: string,
     username: string,
     file: FileUpload | null,
   ) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        const userId = <string>result.user?.uid;
+    const isRegister = from(
+      this.afAuth.createUserWithEmailAndPassword(email, password),
+    ).pipe(
+      map((res) => {
+        const userId = <string>res.user?.uid;
         const user: User = { email, username, userId, avatar: '' };
         this.usersService.createUser(user);
         file && this.filesService.uploadFile(file, user);
         this.router.navigate(['/']);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+      }),
+      catchError((error) => of(error)),
+    );
+
+    return isRegister;
   }
 
-  signIn(email: string, password: string): void {
+  signIn(email: string, password: string) {
     const isLogged = from(
       this.afAuth.signInWithEmailAndPassword(email, password),
-    )
-      .pipe(
-        map((res) => {
-          if (res.user) {
-            this.usersService
-              .getUserInfoById(res.user?.uid)
-              .subscribe((users) => {
-                this._store.dispatch(UserReceived({ user: users[0] }));
-              });
-          }
-          return !!res.user;
-        }),
-        catchError(() => of(false)),
-        take(1),
-      )
-      .subscribe();
+    ).pipe(
+      map((res) => {
+        if (res.user) {
+          this.usersService
+            .getUserInfoById(res.user?.uid)
+            .subscribe((users) => {
+              this._store.dispatch(UserReceived({ user: users[0] }));
+            });
+        }
+        return !!res.user;
+      }),
+      catchError(() => of(false)),
+    );
 
-    if (isLogged) {
-      this.router.navigate(['/']);
-    }
+    return isLogged;
   }
 
   logout(): void {

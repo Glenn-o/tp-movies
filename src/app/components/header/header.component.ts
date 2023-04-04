@@ -1,8 +1,9 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { User, UsersService } from 'src/app/shared/services/users.service';
 
 @Component({
   imports: [NgIf, RouterLink, AsyncPipe],
@@ -11,23 +12,13 @@ import { User, UsersService } from 'src/app/shared/services/users.service';
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
-  user: User | null = null;
+export class HeaderComponent {
+  user$ = this.store.select(selectUserInfo);
   isDropdownOpen = false;
   constructor(
-    private usersService: UsersService,
     private authService: AuthenticationService,
+    private readonly store: Store,
   ) {}
-
-  ngOnInit(): void {
-    this.authService.user$.subscribe((user) => {
-      this.usersService
-        .getUserInfoById(<string>user?.uid)
-        .subscribe((userInfo) => {
-          this.user = userInfo[0];
-        });
-    });
-  }
 
   handleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;

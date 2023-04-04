@@ -1,6 +1,7 @@
 <div class="authBlock">
   <h3>LOGIN</h3>
   <form class="formGroup">
+    <p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
     <input
       type="email"
       class="formControl"
@@ -17,7 +18,7 @@
     />
     <button
       (click)="
-        authService.signIn(userEmail.value, userPassword.value);
+        login(userEmail.value, userPassword.value);
         $event.preventDefault()
       "
     >
