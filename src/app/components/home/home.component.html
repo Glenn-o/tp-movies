@@ -34,12 +34,12 @@
 </div>
 <div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">
-  <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
       <a [routerLink]='["movie", movie.id]'>
       <div class="movie-container">
         <img
+          class="placeholder"
           src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
           alt="{{ movie.original_title }}"
           loading="lazy"
@@ -54,10 +54,12 @@
         <span class="like-icon" [ngClass]="{'liked': isLiked(movie)}"></span>
       </button>
     </div>
-    <div *ngIf="page">
-      <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}"><button >{{page-1}}</button></a>
+  </div>
+  <div *ngIf="page" class="pagination">
+    <div *ngIf="movies$ | async as movies">
+      <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}">{{page-1}}</a>
       <p>{{page}}</p>
-      <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/']" [queryParams]="{page: page+1}"><button>{{page+1}}</button></a>
+      <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/']" [queryParams]="{page: page+1}">{{page+1}}</a>
     </div>
   </div>
 </div>
