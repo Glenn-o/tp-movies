@@ -20,20 +20,40 @@
   font-size: large;
 }
 
-.like-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
 
 .username {
   font-weight: bold;
   margin-right: 10px;
 }
 
+.like-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .like-text {
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   font-weight: normal;
+}
+
+.score-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.score-text {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: normal;
+}
+
+.star {
+  color: #ccc;
+  margin-left: 5px;
+  color: #ffc107;
 }
 
 .movie.title {

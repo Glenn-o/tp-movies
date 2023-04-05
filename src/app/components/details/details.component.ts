@@ -1,7 +1,7 @@
 import { AsyncPipe, NgFor, NgIf, CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of, take } from 'rxjs';
+import { catchError, map, Observable, of, take } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { User } from 'src/app/shared/services/users.service';
 import { Casts } from 'src/types/Casts';
@@ -24,6 +24,7 @@ export class DetailsComponent implements OnInit {
   casts$: Observable<Casts> | null = null;
   user: User | null = null;
   score: Score | undefined = undefined;
+  movieTitle = '';
 
   constructor(
     private readonly apiService: ApiService,
@@ -40,6 +41,11 @@ export class DetailsComponent implements OnInit {
       this.router.navigate(['/404'])
       return of(null)
     }));
+    this.movie$.pipe(
+      map((movie) => movie?.original_title)
+    ).subscribe((title) => {
+      this.movieTitle = title || '';
+    });
     this.casts$ = this.apiService.getCastByMovieId(this.id);
     this.store.select(selectUserInfo).subscribe((user) => {
       this.user = user;
@@ -55,6 +61,7 @@ export class DetailsComponent implements OnInit {
     if (this.user !== null && this.score === undefined) 
     {
       const newScore: Score = {
+        movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
@@ -68,6 +75,7 @@ export class DetailsComponent implements OnInit {
     if (this.user !== null && this.score !== undefined) 
     {
       const newScore: Score = {
+        movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),

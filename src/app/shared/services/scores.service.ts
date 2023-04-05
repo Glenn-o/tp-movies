@@ -26,6 +26,10 @@ export class ScoresService {
         );
     }
 
+    getNewScores(date: Date): Observable<Score[]> {
+        return this.db.collection<Score>('scores', ref => ref.where('createdAt', '>=', date)).valueChanges();
+    }
+
     getScoreByUserId(userId: string, movieId: string): Observable<Score | undefined> {
         return this.db.collection<Score>('scores').doc(`${movieId}${userId}`).valueChanges();
     }
