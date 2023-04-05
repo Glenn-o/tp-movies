@@ -1,13 +1,11 @@
 <div class="sidebar">
   <p class="news-bar-title">News Feed</p>
-  <ng-container *ngIf="newLikes$ | async as newLikes">
-    <div *ngFor="let like of newLikes?.newLikes">
+  <ng-container *ngIf="{ likes: newLikes$ | async } as data">
+    <div *ngFor="let like of data?.likes?.newLikes">
       <div class="like-info">
         <span class="username">
           <a [routerLink]='["profile", like.userId]'>
-            <span>
-              {{like.username}}
-            </span>
+            <span>{{like.username}}</span>
           </a>
           <span class="like-text">liked the movie</span>
           <a [routerLink]='["movie", like.movieId]'>
@@ -16,7 +14,7 @@
         </span>
       </div>
     </div>
-    <div *ngFor="let score of newLikes?.newScores">
+    <div *ngFor="let score of data?.likes?.newScores">
       <div class="score-info">
         <span class="username">
           <a [routerLink]='["profile", score.userId]'>
@@ -26,32 +24,40 @@
           <a [routerLink]='["movie", score.movieId]'>
             <span class="movie-title">{{score.movieTitle}}</span>
           </a>
+          <p>about</p>
+          <span class="score-value">{{score.score}}</span>
+          <p>star</p>
         </span>
       </div>
-  </div>
+    </div>
+  </ng-container>
+</div>
 <div class="sidebar-handle" (click)="toggleSidebar()"></div>
 <div class="container-movies">
+  <h1>Movies</h1>
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
       <a [routerLink]='["movie", movie.id]'>
-        <div class="movie-container">
-          <img class="placeholder" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.original_title }}" loading="lazy" />
-          <div class="movie-info">
-            <p>{{ movie.original_title }}</p>
-          </div>
+      <div class="movie-container">
+        <img
+          src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+          alt="{{ movie.original_title }}"
+          loading="lazy"
+        />
+        <div class="movie-info">
+          <p>{{ movie.original_title }}</p>
         </div>
-      </a>
-
+      </div>
+    </a>
+      
       <button (click)="isLiked(movie) ? unlikeMovie(movie) : likeMovie(movie)">
         <span class="like-icon" [ngClass]="{'liked': isLiked(movie)}"></span>
       </button>
     </div>
-  </div>
-  <div *ngIf="page" class="pagination">
-    <div *ngIf="movies$ | async as movies">
-      <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}">{{page-1}}</a>
+    <div *ngIf="page">
+      <a *ngIf="page-1 > 0" [routerLink]="['/']" [queryParams]="{page: page-1}"><button >{{page-1}}</button></a>
       <p>{{page}}</p>
-      <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/']" [queryParams]="{page: page+1}">{{page+1}}</a>
+      <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/']" [queryParams]="{page: page+1}"><button>{{page+1}}</button></a>
     </div>
   </div>
 </div>

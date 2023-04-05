@@ -1,7 +1,7 @@
 import { AsyncPipe, NgFor, NgIf, CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of, take } from 'rxjs';
+import { catchError, map, Observable, of, take } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { User } from 'src/app/shared/services/users.service';
 import { Casts } from 'src/types/Casts';
@@ -37,11 +37,15 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = <string>this.route.snapshot.paramMap.get('id');
-    this.movieTitle = <string>this.route.snapshot.paramMap.get('title');
     this.movie$ = this.apiService.getMovieById(this.id).pipe(catchError(() => {
       this.router.navigate(['/404'])
       return of(null)
     }));
+    this.movie$.pipe(
+      map((movie) => movie?.original_title)
+    ).subscribe((title) => {
+      this.movieTitle = title || '';
+    });
     this.casts$ = this.apiService.getCastByMovieId(this.id);
     this.store.select(selectUserInfo).subscribe((user) => {
       this.user = user;
