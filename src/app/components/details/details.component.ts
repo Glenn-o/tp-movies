@@ -37,7 +37,6 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = <string>this.route.snapshot.paramMap.get('id');
-    this.movieTitle = <string>this.route.snapshot.paramMap.get('title');
     this.movie$ = this.apiService.getMovieById(this.id).pipe(catchError(() => {
       this.router.navigate(['/404'])
       return of(null)
