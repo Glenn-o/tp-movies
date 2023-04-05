@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { User, UsersService } from '../../shared/services/users.service';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilesService } from 'src/app/shared/services/files.service';
 import { FileUpload } from 'src/app/models/file-upload.model';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin, switchMap } from 'rxjs';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { LikesService } from 'src/app/shared/services/likes.service';
+import { MovieDetails } from 'src/types/MovieDetails';
+import { Like } from 'src/types/Movies';
 
 @Component({
-  imports: [NgIf, FormsModule, WebcamModule],
+  imports: [NgIf, FormsModule, WebcamModule, AsyncPipe, NgFor, RouterLink],
   selector: 'tp-movies-profile',
   standalone: true,
   styleUrls: ['./profile.component.scss'],
@@ -25,11 +29,15 @@ export class ProfileComponent implements OnInit {
   isWebcam = false;
   webcamImage: WebcamImage | null = null;
   private trigger: Subject<void> = new Subject<void>();
+  likedMovies$: Observable<Like[]> | undefined = undefined
+  moviesDetails$: Observable<MovieDetails[]> | undefined = undefined
 
   constructor(
     private authService: AuthenticationService,
     private usersService: UsersService,
     private filesService: FilesService,
+    private moviesService: ApiService,
+    private likesService: LikesService,
     private router: Router,
   ) {
     this.isEditing = false;
@@ -45,6 +53,15 @@ export class ProfileComponent implements OnInit {
           this.username = userInfo[0].username;
           this.email = userInfo[0].email;
           this.avatar = userInfo[0].avatar;
+          this.likedMovies$ = this.likesService.getLikesByUserId(this.userInfo?.userId as string);
+          this.moviesDetails$ = this.likedMovies$?.pipe(
+            switchMap((likes) => {
+              if (!likes) return [];
+              const movieIds = likes.map((like) => String(like.movieId));
+              const requests = movieIds.map((movieId) => this.moviesService.getMovieById(movieId));
+              return forkJoin(requests);
+            }),
+          );
         });
     });
   }

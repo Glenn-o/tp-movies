@@ -60,4 +60,20 @@
       <button type="submit" [disabled]="profileForm.invalid">Save</button>
     </div>
   </form>
+  <div class="container">
+    <h3 class="title">What i like</h3>
+    <div class="movieContainer">
+    
+      <div *ngFor="let movieDetails of moviesDetails$ | async">
+        <a [routerLink]='["movieDetails", movieDetails.id]'>
+          <img
+          class="movieImage"
+          src="https://image.tmdb.org/t/p/original/{{ movieDetails.poster_path }}"
+          alt="{{ movieDetails.original_title }}"
+          loading="lazy"
+        />
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,8 +4,8 @@ div {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
   h3 {
+    margin-top: 30px;
     font-size: 1.5em;
     font-weight: 400;
     margin-bottom: 30px;
@@ -66,3 +66,37 @@ div {
     } 
   }
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  background-color: rgba(255, 217, 0, 0.51);
+  border-radius: 10px;
+  padding: 0px 40px 20px 40px;
+  box-sizing: border-box;
+  width: 90%;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.title {
+    margin-top: 30px;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 30px;
+  }
+
+.movieContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+  }
+
+.movieImage {
+    width: 100px;
+    height: 150px;
+    margin-right: 20px;
+  }
