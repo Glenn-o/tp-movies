@@ -32,7 +32,11 @@
     </div>
   </ng-container>
 </div>
-<div class="sidebar-handle" (click)="toggleSidebar()"></div>
+<div class="sidebar-handle" (click)="toggleSidebar()">
+  <div>
+    <img class="{{isSidebarOpen ? '' : 'left'}}" src="../../../assets/icons/arrow.png" alt="arrow">
+  </div>
+</div>
 <div class="container-movies">
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
