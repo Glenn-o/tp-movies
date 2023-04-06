@@ -79,8 +79,8 @@
         <button type="submit" [disabled]="profileForm.invalid">Save</button>
       </div>
     </form>
+    <h3 class="title">What I like</h3>
     <div class="container">
-      <h3 class="title">What I like</h3>
       <div class="movieContainer">
         <div class="movieContainer" *ngFor="let movieDetails of moviesDetails$ | async">
           <a [routerLink]="['/movie', movieDetails.id]">

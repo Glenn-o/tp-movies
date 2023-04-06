@@ -72,23 +72,32 @@ div {
       } 
     }
   }
+  .icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
   .container {
     display: flex;
     flex-direction: column;
     background-color: rgba(255, 217, 0, 0.51);
     border-radius: 10px;
-    padding: 0px 40px 20px 40px;
+    padding: 0px;
+    padding-top: 5px;
+    @media (max-width: 950px) {
+      padding-top: 20px;
+    }
     box-sizing: border-box;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
     width: 50%;
+    overflow: auto;
     .title {
-        margin-top: 30px;
+        margin-top: 50px;
         font-size: 1.5em;
         font-weight: 400;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
       }
     
     .movieContainer {

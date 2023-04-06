@@ -51,12 +51,14 @@ export class HomeComponent implements OnInit {
       this.scoreService.getLatestScore().subscribe((score: Score | undefined) => {
         if(score && score !== this.latestScore) {
           this.latestScore = score;
+          if (this.latestScore.score > 3 && !this.isSidebarOpen) {
           this.notificationVisible = true;
           this.cd.detectChanges();
           setTimeout(() => {
             this.notificationVisible = false;
             this.cd.detectChanges();
           }, 7000);
+        }
         }
       }, take(1));
     });
@@ -91,6 +93,9 @@ export class HomeComponent implements OnInit {
   }
 
   toggleSidebar() {
+    if (!this.isSidebarOpen) {
+      this.notificationVisible = false;
+    }
     this.isSidebarOpen = !this.isSidebarOpen;
     const sidebar = document.querySelector('.sidebar');
     if (this.isSidebarOpen) {
