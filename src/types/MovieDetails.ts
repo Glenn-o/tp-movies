@@ -1,6 +1,6 @@
 export type MovieDetails = {
   id: number;
-  original_title: string;
+  title: string;
   poster_path: string;
   overview: string;
   release_date: string;

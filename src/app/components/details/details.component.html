@@ -1,5 +1,5 @@
 <div *ngIf="movie$ | async as movie" class="container">
-  <a [routerLink]="['/..']">
+  <a (click)="back()">
     <img src="../../../assets/icons/arrow.png" alt="arrow" />
   </a>
 
@@ -7,11 +7,12 @@
     <div class="movie-infos">
       <img
         src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
-        alt="{{ movie.original_title }}"
+        alt="{{ movie.title }}"
         loading="lazy"
+        onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'"
       />
       <div>
-        <h2>{{ movie.original_title }}</h2>
+        <h2>{{ movie.title }}</h2>
         <div class="rating">
           <span
             class="star"

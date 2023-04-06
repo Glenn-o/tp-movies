@@ -41,6 +41,10 @@ export const appRoutes: Route[] = [
     component: DetailsComponent,
   },
   {
+    path: 'search',
+    loadComponent: () => import('./components/search/search.component').then(m => m.SearchComponent),
+  },
+  {
     path: '**',
     loadComponent: () => import('./components/404/404.component').then(m => m.NotFoundComponent),
   }

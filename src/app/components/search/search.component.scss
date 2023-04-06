@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  input {
+    width: 300px;
+    height: 25px;
+    margin: 5px;
+    padding: 5px;
+  }
+  button {
+    height: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  form {
+    input {
+      width: 70vw;
+    }
+  }
+}
