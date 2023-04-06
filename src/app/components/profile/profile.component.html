@@ -1,63 +1,100 @@
 <div>
-  <h3>Profile</h3>
+  <div>
+    <h3>Profile</h3>
 
-  <form #profileForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="images_container">
-      <img
-        *ngIf="!isWebcam"
-        width="100px"
-        height="100px"
-        src="{{ avatar }}"
-        alt="avatar"
-        onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/default.png?alt=media&token=5ec339d7-2c75-42e2-ae4b-b6dfb2572af0'"
-      />
-      <webcam [width]="200" [height]="150" *ngIf="isWebcam && !webcamImage" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
-      <img *ngIf="webcamImage && isEditing" [width]="100"[height]="100" [src]="webcamImage.imageAsDataUrl" alt="avatar picture" />
-      <input
-        type="file"
-        name="avatar"
-        accept=".png, .jpeg, .jpg"
-      />
-      <img
-        (click)="onImageEditing()"
-        *ngIf="isEditing"
-        class="edit_image"
-        width="100px"
-        height="100px"
-        src="../../../assets/icons/image_edit.png"
-        alt="editing image"
-      />
-    </div>
-    <button *ngIf="isEditing && !isWebcam" (click)="displayWebcam(); $event.preventDefault()">Or take a picture ?</button>
-    <button *ngIf="isEditing && isWebcam && !webcamImage" (click)="takePicture(); $event.preventDefault()">📸 Take a picture</button>
-    <input
-      type="text"
-      name="username"
-      placeholder="username"
-      [(ngModel)]="username"
-      [disabled]="!isEditing"
-      required
-    />
-    <input
-      type="email"
-      name="email"
-      placeholder="email"
-      [(ngModel)]="email"
-      [disabled]="!isEditing"
-      required
-    />
-    <button
-      *ngIf="!isEditing"
-      type="button"
-      (click)="handleEditing(); $event.preventDefault()"
-    >
-      Edit
-    </button>
-    <div *ngIf="isEditing" class="button_container">
-      <button type="button" (click)="onReset(); $event.preventDefault()">
-        Cancel
+    <form #profileForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="images_container">
+        <img
+          *ngIf="!isWebcam"
+          width="100px"
+          height="100px"
+          src="{{ avatar }}"
+          alt="avatar"
+          onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/default.png?alt=media&token=5ec339d7-2c75-42e2-ae4b-b6dfb2572af0'"
+        />
+        <webcam
+          [width]="200"
+          [height]="150"
+          *ngIf="isWebcam && !webcamImage"
+          [trigger]="triggerObservable"
+          (imageCapture)="handleImage($event)"
+        ></webcam>
+        <img
+          *ngIf="webcamImage && isEditing"
+          [width]="100"
+          [height]="100"
+          [src]="webcamImage.imageAsDataUrl"
+          alt="avatar picture"
+        />
+        <input type="file" name="avatar" accept=".png, .jpeg, .jpg" />
+        <img
+          (click)="onImageEditing()"
+          *ngIf="isEditing"
+          class="edit_image"
+          width="100px"
+          height="100px"
+          src="../../../assets/icons/image_edit.png"
+          alt="editing image"
+        />
+      </div>
+      <button
+        *ngIf="isEditing && !isWebcam"
+        (click)="displayWebcam(); $event.preventDefault()"
+      >
+        Or take a picture ?
       </button>
-      <button type="submit" [disabled]="profileForm.invalid">Save</button>
+      <button
+        *ngIf="isEditing && isWebcam && !webcamImage"
+        (click)="takePicture(); $event.preventDefault()"
+      >
+        📸 Take a picture
+      </button>
+      <input
+        type="text"
+        name="username"
+        placeholder="username"
+        [(ngModel)]="username"
+        [disabled]="!isEditing"
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="email"
+        [(ngModel)]="email"
+        [disabled]="!isEditing"
+        required
+      />
+      <button
+        *ngIf="!isEditing"
+        type="button"
+        (click)="handleEditing(); $event.preventDefault()"
+      >
+        Edit
+      </button>
+      <div *ngIf="isEditing" class="button_container">
+        <button type="button" (click)="onReset(); $event.preventDefault()">
+          Cancel
+        </button>
+        <button type="submit" [disabled]="profileForm.invalid">Save</button>
+      </div>
+    </form>
+    <div class="container">
+      <h3 class="title">What I like</h3>
+      <div class="movieContainer">
+        <div class="movieContainer" *ngFor="let movieDetails of moviesDetails$ | async">
+          <a [routerLink]="['/movie', movieDetails.id]">
+            <img
+              class="movieImage"
+              src="https://image.tmdb.org/t/p/original/{{
+                movieDetails.poster_path
+              }}"
+              alt="{{ movieDetails.original_title }}"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </div>
