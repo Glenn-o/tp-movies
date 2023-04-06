@@ -1,6 +1,17 @@
 .container {
+  position: relative;
   padding: 20px;
   height: calc(100vh - 104px);
+  & > a {
+    position: absolute;
+    rotate: 180deg;
+    width: 30px;
+    top: 30px;
+    left: 20px;
+    img {
+      width: 100%;
+    }
+  }
   & > div {
     display: flex;
     height: 100%;
@@ -71,6 +82,10 @@
 @media (max-width: 1000px) {
   .container {
     height: auto;
+    & > a {
+      top: 20px;
+      left: 5px;
+    }
     & > div {
       flex-direction: column;
       .movie-infos {
