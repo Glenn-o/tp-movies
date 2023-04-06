@@ -2,8 +2,8 @@ import { AsyncPipe, NgFor, NgIf, NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
-import { Observable, catchError, combineLatest, take } from 'rxjs';
+import { Observable, catchError, combineLatest, take, map } from 'rxjs';
+import { MoviesReceived } from 'src/app/ngrx/movies/movies.action';
 import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { LikesService } from 'src/app/shared/services/likes.service';
@@ -21,7 +21,7 @@ import { ScoresService } from 'src/app/shared/services/scores.service';
 })
 
 export class HomeComponent implements OnInit {
-  
+
   arrivalTime: Date = new Date();
   newLikes$ = combineLatest([this.likesService.getNewLikes(this.arrivalTime), this.scoreService.getNewScores(this.arrivalTime)]).pipe(map(([newLikes, newScores]) => ({ newLikes, newScores})))
   likes: Like[] = [];
@@ -65,8 +65,7 @@ export class HomeComponent implements OnInit {
   }
 
   likeMovie(movie: Movie) {
-    if (this.user !== null) 
-    {
+    if (this.user !== null) {
       const newLike: Like = {
         movieId: movie.id,
         movieTitle: movie.title,
@@ -74,7 +73,7 @@ export class HomeComponent implements OnInit {
         username: this.user.username,
         createdAt: new Date(),
       }
-      this.likesService.likeMovie(newLike).subscribe(() =>  {
+      this.likesService.likeMovie(newLike).subscribe(() => {
         this.likes.push(newLike)
       }, take(1));
     }
@@ -89,7 +88,7 @@ export class HomeComponent implements OnInit {
   }
 
   isLiked(movie: Movie) {
-     return this.likes.some(like => like.movieId === movie.id && like.userId === this.user?.userId);
+    return this.likes.some(like => like.movieId === movie.id && like.userId === this.user?.userId);
   }
 
   toggleSidebar() {
@@ -108,6 +107,10 @@ export class HomeComponent implements OnInit {
   getMovies(page: number = 1) {
     if (page) {
       this.movies$ = this.apiService.getTrendingMovies(page).pipe(
+        map((movies: Trending) => {
+          this.store.dispatch(MoviesReceived({ movies: movies }))
+          return movies
+        }),
         catchError(() => {
           this.page = 1;
           return this.apiService.getTrendingMovies(1);
@@ -123,7 +126,7 @@ export class HomeComponent implements OnInit {
     private readonly renderer: Renderer2,
     private readonly likesService: LikesService,
     private readonly route: ActivatedRoute,
-    private readonly store: Store<User>,
+    private readonly store: Store,
     private readonly scoreService: ScoresService,
     private cd: ChangeDetectorRef,
   ) {
@@ -131,5 +134,5 @@ export class HomeComponent implements OnInit {
       this.page = Number(page['page']) || 1
       this.getMovies(Number(this.page))
     }, take(1));
-   }
+  }
 }
