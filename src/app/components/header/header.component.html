@@ -6,6 +6,7 @@
       srcset=""
     />
     <a [routerLink]="['/']">Movies BDD</a>
+    <a style="margin-left: 10px;" [routerLink]="['/search']">Search movies</a>
   </div>
   <nav>
     <div *ngIf="user$ | async as user; else noUser" (click)="handleDropdown()">

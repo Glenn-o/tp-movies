@@ -45,11 +45,12 @@
         <img
           class="placeholder"
           src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
-          alt="{{ movie.original_title }}"
+          alt="{{ movie.title }}"
           loading="lazy"
+          onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'"
         />
         <div class="movie-info">
-          <p>{{ movie.original_title }}</p>
+          <p>{{ movie.title }}</p>
         </div>
       </div>
     </a>

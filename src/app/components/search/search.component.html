@@ -1,0 +1,46 @@
+<div>
+  <form class="formGroup">
+    <input
+      type="text"
+      class="formControl"
+      placeholder="Search"
+      #queryInput
+      required
+    />
+    <button
+      (click)="
+      getSearchResult(queryInput.value);
+        $event.preventDefault()
+      "
+    >
+      Search
+    </button>
+  </form>
+  <div class="container-movies">
+    <div *ngIf="movies$ | async as movies">
+      <div *ngFor="let movie of movies.results">
+        <a [routerLink]='["/movie", movie.id]'>
+        <div class="movie-container">
+          <img
+            class="placeholder"
+            src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+            alt="{{ movie.title }}"
+            loading="lazy"
+            onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'"
+          />
+          <div class="movie-info">
+            <p>{{ movie.title }}</p>
+          </div>
+        </div>
+      </a>
+      </div>
+    </div>
+    <div *ngIf="page" class="pagination">
+      <div *ngIf="movies$ | async as movies">
+        <a *ngIf="page-1 > 0" [routerLink]="['/search']" [queryParams]="{query, page: page-1}">{{page-1}}</a>
+        <p>{{page}}</p>
+        <a *ngIf="page+1 <= movies.total_pages" [routerLink]="['/search']" [queryParams]="{query, page: page+1}">{{page+1}}</a>
+      </div>
+    </div>
+  </div>
+</div>

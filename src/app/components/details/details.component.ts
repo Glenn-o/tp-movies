@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf, CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf, CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, map, Observable, of, take } from 'rxjs';
@@ -32,61 +32,63 @@ export class DetailsComponent implements OnInit {
     private router: Router,
     private readonly store: Store<User>,
     private readonly scoresService: ScoresService,
+    private readonly location: Location,
   ) {}
-
 
   ngOnInit(): void {
     this.id = <string>this.route.snapshot.paramMap.get('id');
-    this.movie$ = this.apiService.getMovieById(this.id).pipe(catchError(() => {
-      this.router.navigate(['/404'])
-      return of(null)
-    }));
-    this.movie$.pipe(
-      map((movie) => movie?.original_title)
-    ).subscribe((title) => {
+    this.movie$ = this.apiService.getMovieById(this.id).pipe(
+      catchError(() => {
+        this.router.navigate(['/404']);
+        return of(null);
+      }),
+    );
+    this.movie$.pipe(map((movie) => movie?.title)).subscribe((title) => {
       this.movieTitle = title || '';
     });
     this.casts$ = this.apiService.getCastByMovieId(this.id);
     this.store.select(selectUserInfo).subscribe((user) => {
       this.user = user;
       if (this.user) {
-        this.scoresService.getScoreByUserId(this.user.userId, this.id).subscribe((score: Score | undefined) => {
-          this.score = score
-        }, take(1))
+        this.scoresService
+          .getScoreByUserId(this.user.userId, this.id)
+          .subscribe((score: Score | undefined) => {
+            this.score = score;
+          }, take(1));
       }
     });
   }
 
   scoreMovie(score: number) {
-    if (this.user !== null && this.score === undefined) 
-    {
+    if (this.user !== null && this.score === undefined) {
       const newScore: Score = {
         movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
         username: this.user.username,
-        score: score
-      }
-      this.scoresService.scoreMovie(newScore).subscribe(() =>  {
-        this.score = newScore
+        score: score,
+      };
+      this.scoresService.scoreMovie(newScore).subscribe(() => {
+        this.score = newScore;
       }, take(1));
     }
-    if (this.user !== null && this.score !== undefined) 
-    {
+    if (this.user !== null && this.score !== undefined) {
       const newScore: Score = {
         movieTitle: this.movieTitle,
         movieId: this.id,
         userId: this.user.userId,
         createdAt: new Date(),
         username: this.user.username,
-        score: score
-      }
-      this.scoresService.updateScore(newScore).subscribe(() =>  {
-        this.score = newScore
+        score: score,
+      };
+      this.scoresService.updateScore(newScore).subscribe(() => {
+        this.score = newScore;
       }, take(1));
     }
   }
 
-  
+  back(): void {
+    this.location.back();
+  }
 }

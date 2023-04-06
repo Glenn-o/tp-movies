@@ -28,4 +28,10 @@ export class ApiService {
       `https://api.themoviedb.org/3/movie/${id}/credits?api_key=498202a6bb5540555f8ae398a434f702`,
     );
   }
+
+  public search(query: string, page: number): Observable<Trending> {
+    return this.httpClient.get<Trending>(
+      `https://api.themoviedb.org/3/search/movie?api_key=498202a6bb5540555f8ae398a434f702&query=${query}&page=${page}`,
+    );
+  }
 }
