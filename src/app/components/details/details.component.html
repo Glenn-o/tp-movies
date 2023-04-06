@@ -1,21 +1,70 @@
-<div *ngIf="movie$ | async as movie" class="container-details">
-  <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.original_title }}" loading="lazy" />
-  <div class="rating">
-    <span class="star" (click)="scoreMovie(1)" [ngClass]="{filled: score !== undefined && score.score >= 1}"> &#9733;</span>
-    <span class="star" (click)="scoreMovie(2)" [ngClass]="{filled: score !== undefined && score.score >= 2}"> &#9733;</span>
-    <span class="star" (click)="scoreMovie(3)" [ngClass]="{filled: score !== undefined && score.score >= 3}"> &#9733;</span>
-    <span class="star" (click)="scoreMovie(4)" [ngClass]="{filled: score !== undefined && score.score >= 4}"> &#9733;</span>
-    <span class="star" (click)="scoreMovie(5)" [ngClass]="{filled: score !== undefined && score.score >= 5}"> &#9733;</span>
-  </div>
-  <div>{{movie.original_title}}</div>
-  <p>synopsis: <br>{{movie.overview}}</p>
-  <p>Release date: {{movie.release_date}}</p>
-</div>
-
-<div *ngIf="casts$ | async as casts" style="display: flex; overflow: scroll;">
-  <div *ngFor="let cast of casts.cast" style="padding: 20px;">
-    <p><strong>Actor: </strong>{{cast.name}}</p>
-    <p><strong>Character: </strong> {{cast.character}}</p>
-    <img width="50px" loading="lazy" src="https://image.tmdb.org/t/p/original/{{cast.profile_path}}" alt="{{cast.name}}" onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'">
+<div *ngIf="movie$ | async as movie" class="container">
+  <div>
+    <div class="movie-infos">
+      <img
+        src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+        alt="{{ movie.original_title }}"
+        loading="lazy"
+      />
+      <div>
+        <h2>{{ movie.original_title }}</h2>
+        <div class="rating">
+          <span
+            class="star"
+            (click)="scoreMovie(1)"
+            [ngClass]="{ filled: score !== undefined && score.score >= 1 }"
+          >
+            &#9733;</span
+          >
+          <span
+            class="star"
+            (click)="scoreMovie(2)"
+            [ngClass]="{ filled: score !== undefined && score.score >= 2 }"
+          >
+            &#9733;</span
+          >
+          <span
+            class="star"
+            (click)="scoreMovie(3)"
+            [ngClass]="{ filled: score !== undefined && score.score >= 3 }"
+          >
+            &#9733;</span
+          >
+          <span
+            class="star"
+            (click)="scoreMovie(4)"
+            [ngClass]="{ filled: score !== undefined && score.score >= 4 }"
+          >
+            &#9733;</span
+          >
+          <span
+            class="star"
+            (click)="scoreMovie(5)"
+            [ngClass]="{ filled: score !== undefined && score.score >= 5 }"
+          >
+            &#9733;</span
+          >
+        </div>
+        <h3>Synopsis:</h3>
+        <p>{{ movie.overview }}</p>
+        <p>(release date: {{ movie.release_date }})</p>
+      </div>
+    </div>
+    <div *ngIf="casts$ | async as casts" class="cast">
+      <div *ngFor="let cast of casts.cast">
+        <img
+          loading="lazy"
+          src="https://image.tmdb.org/t/p/original/{{ cast.profile_path }}"
+          alt="{{ cast.name }}"
+          onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'"
+        />
+        <div class="actor-infos">
+          <p>
+            {{ cast.name }} <br />
+            {{ cast.character }}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
