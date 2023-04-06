@@ -1,4 +1,8 @@
 <div *ngIf="movie$ | async as movie" class="container">
+  <a [routerLink]="['/..']">
+    <img src="../../../assets/icons/arrow.png" alt="arrow" />
+  </a>
+
   <div>
     <div class="movie-infos">
       <img

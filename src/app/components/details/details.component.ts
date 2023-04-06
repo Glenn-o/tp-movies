@@ -1,6 +1,6 @@
 import { AsyncPipe, NgFor, NgIf, CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, map, Observable, of, take } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { User } from 'src/app/shared/services/users.service';
@@ -16,7 +16,7 @@ import { ScoresService } from 'src/app/shared/services/scores.service';
   standalone: true,
   templateUrl: 'details.component.html',
   styleUrls: ['./details.component.scss'],
-  imports: [AsyncPipe, NgIf, NgFor, CommonModule],
+  imports: [AsyncPipe, NgIf, NgFor, CommonModule, RouterLink],
 })
 export class DetailsComponent implements OnInit {
   id = '';
