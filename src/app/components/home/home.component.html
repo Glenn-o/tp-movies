@@ -32,7 +32,7 @@
     </div>
   </ng-container>
 </div>
-<div class="sidebar-handle" (click)="toggleSidebar()">
+<div *ngIf="user !== null" class="sidebar-handle" (click)="toggleSidebar()">
   <div>
     <img
       class="{{ isSidebarOpen ? '' : 'left' }}"
@@ -42,7 +42,7 @@
   </div>
 </div>
 <a [routerLink]="['movie', latestScore?.movieId]">
-<div class="notification" *ngIf="notificationVisible">
+<div class="notification" *ngIf="notificationVisible && user !== null">
     <p class="notification-title">Notification</p>
     <div class="score-info">
       <span class="username">
@@ -59,18 +59,19 @@
 <div class="container-movies">
   <div *ngIf="movies$ | async as movies">
     <div *ngFor="let movie of movies.results">
-      <a [routerLink]="['movie', movie.id]">
-        <div class="movie-container">
-          <img
-            class="placeholder"
-            src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
-            alt="{{ movie.original_title }}"
-            loading="lazy"
-          />
-          <div class="movie-info">
-            <p>{{ movie.original_title }}</p>
-          </div>
+      <a [routerLink]='["movie", movie.id]'>
+      <div class="movie-container">
+        <img
+          class="placeholder"
+          src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}"
+          alt="{{ movie.title }}"
+          loading="lazy"
+          onerror="this.src='https://firebasestorage.googleapis.com/v0/b/tp-movies-2023.appspot.com/o/error.png?alt=media&token=a8f7d4c6-885e-40be-8808-29fe66a838b3'"
+        />
+        <div class="movie-info">
+          <p>{{ movie.title }}</p>
         </div>
+      </div>
       </a>
 
       <button (click)="isLiked(movie) ? unlikeMovie(movie) : likeMovie(movie)">

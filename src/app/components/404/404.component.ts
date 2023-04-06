@@ -5,11 +5,10 @@ import { Component } from '@angular/core';
   standalone: true,
   template: `
     <div>
-      <h3>404</h3>
+      <h1>4<span>0</span>4</h1>
       <p>PAGE NOT FOUND AHAHAH Try an other routes !</p>
     </div>
   `,
+  styleUrls: ['./404.component.scss'],
 })
-
-export class NotFoundComponent {
-}
+export class NotFoundComponent {}

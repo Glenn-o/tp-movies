@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     {
       const newLike: Like = {
         movieId: movie.id,
-        movieTitle: movie.original_title,
+        movieTitle: movie.title,
         userId: this.user.userId,
         username: this.user.username,
         createdAt: new Date(),
