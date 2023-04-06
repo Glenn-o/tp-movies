@@ -29,7 +29,7 @@
         <input type="file" name="avatar" accept=".png, .jpeg, .jpg" />
         <img
           (click)="onImageEditing()"
-          *ngIf="isEditing"
+          *ngIf="isEditing && !isWebcam"
           class="edit_image"
           width="100px"
           height="100px"

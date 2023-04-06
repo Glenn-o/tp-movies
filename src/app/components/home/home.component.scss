@@ -74,6 +74,26 @@
   width: 10px;
   background-color: gold;
   cursor: pointer;
+  div {
+    width: 25px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    img {
+      width: 80%;
+      transition: 300ms;
+    }
+    .left {
+      transform: rotateZ(180deg);
+      transition: 300ms;
+    }
+  }
 }
 
 .container-movies {
