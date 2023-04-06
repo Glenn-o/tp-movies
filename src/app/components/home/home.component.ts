@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
           setTimeout(() => {
             this.notificationVisible = false;
             this.cd.detectChanges();
-          }, 5000);
+          }, 7000);
         }
       }, take(1));
     });
