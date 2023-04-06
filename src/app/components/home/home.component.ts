@@ -1,5 +1,5 @@
 import { AsyncPipe, NgFor, NgIf, NgClass } from '@angular/common';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { selectUserInfo } from 'src/app/ngrx/user/user.reducer';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { LikesService } from 'src/app/shared/services/likes.service';
 import { User } from 'src/app/shared/services/users.service';
-import { Like, Movie, Trending } from 'src/types/Movies';
+import { Like, Movie, Trending, Score } from 'src/types/Movies';
 import { ScoresService } from 'src/app/shared/services/scores.service';
 
 
@@ -25,11 +25,14 @@ export class HomeComponent implements OnInit {
   arrivalTime: Date = new Date();
   newLikes$ = combineLatest([this.likesService.getNewLikes(this.arrivalTime), this.scoreService.getNewScores(this.arrivalTime)]).pipe(map(([newLikes, newScores]) => ({ newLikes, newScores})))
   likes: Like[] = [];
+  newScores$ = this.scoreService.getNewScores(this.arrivalTime);
+  notificationVisible = false;
   isSidebarOpen = false;
   id$ = this.route.queryParams;
   page = 1;
   movies$: Observable<Trending> | null = null;
   user: User | null = null;
+  latestScore: Score | undefined;
 
   ngOnInit(): void {
     this.store.select(selectUserInfo).subscribe((user) => {
@@ -41,6 +44,24 @@ export class HomeComponent implements OnInit {
       }
     });
     this.arrivalTime = new Date();
+    this.scoreService.getLatestScore().subscribe((score: Score | undefined) => {
+      this.latestScore = score;
+    }, take(1));
+    this.newScores$.subscribe(() => {
+      this.scoreService.getLatestScore().subscribe((score: Score | undefined) => {
+        if(score && score !== this.latestScore) {
+          this.latestScore = score;
+          if (this.latestScore.score > 3 && !this.isSidebarOpen) {
+          this.notificationVisible = true;
+          this.cd.detectChanges();
+          setTimeout(() => {
+            this.notificationVisible = false;
+            this.cd.detectChanges();
+          }, 7000);
+        }
+        }
+      }, take(1));
+    });
   }
 
   likeMovie(movie: Movie) {
@@ -72,6 +93,9 @@ export class HomeComponent implements OnInit {
   }
 
   toggleSidebar() {
+    if (!this.isSidebarOpen) {
+      this.notificationVisible = false;
+    }
     this.isSidebarOpen = !this.isSidebarOpen;
     const sidebar = document.querySelector('.sidebar');
     if (this.isSidebarOpen) {
@@ -101,6 +125,7 @@ export class HomeComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly store: Store<User>,
     private readonly scoreService: ScoresService,
+    private cd: ChangeDetectorRef,
   ) {
     this.id$.subscribe((page) => {
       this.page = Number(page['page']) || 1

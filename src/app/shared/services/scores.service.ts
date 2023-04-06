@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { Score } from 'src/types/Movies';
 
 
@@ -32,5 +32,9 @@ export class ScoresService {
 
     getScoreByUserId(userId: string, movieId: string): Observable<Score | undefined> {
         return this.db.collection<Score>('scores').doc(`${movieId}${userId}`).valueChanges();
+    }
+
+    getLatestScore(): Observable<Score | undefined> {
+        return this.db.collection<Score>('scores', ref => ref.orderBy('createdAt', 'desc').limit(1)).valueChanges().pipe(map(scores => scores[0]));
     }
 }
