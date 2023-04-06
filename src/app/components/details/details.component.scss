@@ -8,7 +8,7 @@
     .movie-infos {
       display: flex;
       height: 100%;
-      width: 75%;
+      width: 80%;
       & > img {
         border-radius: 20px;
         margin-right: 20px;
@@ -53,6 +53,69 @@
       margin-bottom: 4px;
       padding-left: 5px;
       transition: opacity 500ms;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .container {
+    height: auto;
+    & > div {
+      flex-direction: column;
+      .movie-infos {
+        display: flex;
+        width: auto;
+        & > img {
+          align-self: center;
+          width: 80%;
+          border-radius: 20px;
+          margin-bottom: 10px;
+        }
+        & > div {
+          display: flex;
+          flex-direction: column;
+          .rating {
+            align-self: center;
+          }
+        }
+        h3:first-of-type {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  .cast {
+    display: flex;
+    width: auto;
+    overflow-x: auto;
+    max-width: 100%;
+    margin-top: 10px;
+    & > div {
+      flex: 0 0 150px;
+      margin-right: 10px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    .movie-infos {
+      flex-direction: column;
+      & > img {
+        margin-right: 0px;
+      }
+      h2 {
+        display: none;
+      }
+    }
+  }
+  .cast {
+    margin-top: 20px;
+    & > div {
+      flex: 0 0 150px;
+      .actor-infos {
+        opacity: 1;
+      }
     }
   }
 }
