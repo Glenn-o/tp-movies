@@ -44,11 +44,11 @@ export class HomeComponent implements OnInit {
       }
     });
     this.arrivalTime = new Date();
-    this.scoreService.getLatestScore().subscribe((score: Score | undefined) => {
+    this.scoreService.getLatestScore(this.arrivalTime).subscribe((score: Score | undefined) => {
       this.latestScore = score;
     }, take(1));
     this.newScores$.subscribe(() => {
-      this.scoreService.getLatestScore().subscribe((score: Score | undefined) => {
+      this.scoreService.getLatestScore(this.arrivalTime).subscribe((score: Score | undefined) => {
         if(score && score !== this.latestScore) {
           this.latestScore = score;
           if (this.latestScore.score > 3 && !this.isSidebarOpen) {
