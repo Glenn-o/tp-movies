@@ -34,7 +34,8 @@ export class ScoresService {
         return this.db.collection<Score>('scores').doc(`${movieId}${userId}`).valueChanges();
     }
 
-    getLatestScore(): Observable<Score | undefined> {
-        return this.db.collection<Score>('scores', ref => ref.orderBy('createdAt', 'desc').limit(1)).valueChanges().pipe(map(scores => scores[0]));
+    getLatestScore(date: Date): Observable<Score | undefined> {
+        return this.db.collection<Score>('scores', ref => ref.where('createdAt', '>=', date).limit(1)).valueChanges().pipe(map(scores => scores[0]));
     }
+    
 }
