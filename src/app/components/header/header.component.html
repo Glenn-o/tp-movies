@@ -1,13 +1,14 @@
 <header>
-  <div>
-    <img
-      src="../assets/icons/burger_menu.svg"
-      alt="burger menu icon"
-      srcset=""
-    />
-    <a [routerLink]="['/']">Movies BDD</a>
-    <a style="margin-left: 10px;" [routerLink]="['/search']">Search movies</a>
-  </div>
+  <nav>
+    <ul>
+      <li><a [routerLink]="['/']">Movies BDD</a></li>
+      <li>
+        <a [routerLink]="['/search']"
+          ><img src="../../../assets/icons/search.svg" alt="search icon"
+        /></a>
+      </li>
+    </ul>
+  </nav>
   <nav>
     <div *ngIf="user$ | async as user; else noUser" (click)="handleDropdown()">
       <img
