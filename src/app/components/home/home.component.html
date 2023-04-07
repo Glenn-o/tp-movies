@@ -2,7 +2,7 @@
   <p class="news-bar-title">News Feed</p>
   <ng-container *ngIf="{ likes: newLikes$ | async } as data">
     <div *ngFor="let like of data?.likes?.newLikes">
-      <div class="like-info">
+      <div class="like-info" *ngIf="like.username !== user?.username">
         <span class="username">
           <a [routerLink]="['profile', like.userId]">
             <span>{{ like.username }}</span>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div *ngFor="let score of data?.likes?.newScores">
-      <div class="score-info">
+      <div class="score-info" *ngIf="score.username !== user?.username">
         <span class="username">
           <a [routerLink]="['profile', score.userId]">
             <span>{{ score.username }}</span>
@@ -42,7 +42,7 @@
   </div>
 </div>
 <a [routerLink]="['movie', latestScore?.movieId]">
-<div class="notification" *ngIf="notificationVisible && user !== null">
+<div class="notification" *ngIf="notificationVisible && user !== null && latestScore?.username !== user.username">
     <p class="notification-title">Notification</p>
     <div class="score-info">
       <span class="username">
