@@ -1,7 +1,7 @@
 <div class="sidebar">
   <p class="news-bar-title">News Feed</p>
   <ng-container *ngIf="{ likes: newLikes$ | async } as data">
-    <div *ngFor="let like of data?.likes?.newLikes">
+    <div *ngFor="let like of data?.likes?.newLikes?.reverse()">
       <div class="like-info" *ngIf="like.username !== user?.username">
         <span class="username">
           <a [routerLink]="['profile', like.userId]">
@@ -14,7 +14,7 @@
         </span>
       </div>
     </div>
-    <div *ngFor="let score of data?.likes?.newScores">
+    <div *ngFor="let score of data?.likes?.newScores?.reverse()">
       <div class="score-info" *ngIf="score.username !== user?.username">
         <span class="username">
           <a [routerLink]="['profile', score.userId]">
